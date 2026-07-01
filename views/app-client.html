@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minha Conta — Carpe Diem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/_common/styles/global.css" />
+  <link rel="stylesheet" href="assets/app/styles/app.css" />
+</head>
+<body>
+
+  <header class="topo">
+    <div class="container topo-inner">
+      <a href="../index.html" class="logo">Carpe<span>Diem</span></a>
+      <nav>
+        <ul class="menu">
+          <li><a href="../index.html" target="_blank">Início</a></li>
+          <li><a href="portfolios.html" target="_blank">Portfólios</a></li>
+          <li><a href="app-client.html" class="ativo">Minha conta</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-perfil">
+        <img class="sidebar-avatar"
+             src="assets/public/images/perfil-cliente.jpg"
+             alt="Avatar" />
+        <span class="sidebar-nome">Célia Vieira</span>
+        <span class="sidebar-tipo">Cliente</span>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li><a href="#" class="ativo nav-link" data-secao="perfil">
+          <span class="nav-icone">◯</span> Meu perfil
+        </a></li>
+        <li><a href="#" class="nav-link" data-secao="favoritos">
+          <span class="nav-icone">◈</span> Favoritos
+        </a></li>
+        <li><a href="#" class="nav-link" data-secao="avaliacoes">
+          <span class="nav-icone">◫</span> Minhas avaliações
+        </a></li>
+      </ul>
+
+      <div class="sidebar-separador"></div>
+      <div class="sidebar-sair">
+        <a href="../index.html"><span class="nav-icone">←</span> Sair</a>
+      </div>
+    </aside>
+
+    <main class="app-conteudo">
+
+      <!-- Perfil -->
+      <div id="secao-perfil" class="app-secao-pagina">
+        <div class="app-cabecalho">
+          <h1>Meu perfil</h1>
+          <p>Gerencie seus dados pessoais</p>
+        </div>
+
+        <div class="app-secao">
+          <h2>Informações pessoais</h2>
+          <form class="perfil-form" onsubmit="event.preventDefault(); mostrarAviso('Perfil salvo!')">
+            <div class="perfil-avatar-wrapper">
+              <img class="perfil-avatar"
+                   src="assets/public/images/perfil-cliente.jpg"
+                   alt="Avatar" />
+              <div class="perfil-avatar-info">
+                <h4>Foto de perfil</h4>
+                <p>Recomendado: quadrado, mínimo 200×200px</p>
+                <input type="file" accept="image/*" style="font-size:0.82rem;" />
+              </div>
+            </div>
+            <div class="form-linha">
+              <div class="campo">
+                <label>Nome</label>
+                <input type="text" value="Célia Vieira" />
+              </div>
+              <div class="campo">
+                <label>E-mail</label>
+                <input type="email" value="celia@email.com" />
+              </div>
+            </div>
+            <div class="form-linha">
+              <div class="campo">
+                <label>Cidade</label>
+                <input type="text" value="Curitiba" />
+              </div>
+              <div class="campo">
+                <label>Estado</label>
+                <select>
+                  <option selected>PR</option>
+                  <option>SC</option>
+                  <option>RS</option>
+                </select>
+              </div>
+            </div>
+            <div class="campo">
+              <label>Endereço</label>
+              <input type="text" placeholder="Rua, número, bairro" />
+            </div>
+            <div class="campo">
+              <label>Telefone</label>
+              <input type="tel" placeholder="(41) 99000-0000" />
+            </div>
+            <button type="submit" class="botao botao-primario">Salvar alterações</button>
+          </form>
+        </div>
+
+        <div class="app-secao">
+          <h2>Alterar senha</h2>
+          <form class="perfil-form" style="max-width:420px;"
+                onsubmit="event.preventDefault(); mostrarAviso('Senha alterada!')">
+            <div class="campo">
+              <label>Senha atual</label>
+              <input type="password" placeholder="••••••••" />
+            </div>
+            <div class="campo">
+              <label>Nova senha</label>
+              <input type="password" placeholder="••••••••" />
+            </div>
+            <div class="campo">
+              <label>Confirmar nova senha</label>
+              <input type="password" placeholder="••••••••" />
+            </div>
+            <button type="submit" class="botao botao-primario">Alterar senha</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Favoritos -->
+      <div id="secao-favoritos" class="app-secao-pagina" style="display:none;">
+        <div class="app-cabecalho">
+          <h1>Favoritos</h1>
+          <p>Fotógrafos que você salvou</p>
+        </div>
+        <div class="app-secao">
+          <h2>Portfólios salvos</h2>
+          <div id="lista-favoritos" style="display:flex; flex-direction:column; gap:12px;"></div>
+        </div>
+      </div>
+
+      <!-- Avaliações -->
+      <div id="secao-avaliacoes" class="app-secao-pagina" style="display:none;">
+        <div class="app-cabecalho">
+          <h1>Minhas avaliações</h1>
+          <p>Avaliações que você enviou</p>
+        </div>
+        <div class="app-secao">
+          <h2>Histórico</h2>
+          <table class="tabela-mensagens">
+            <thead>
+              <tr><th>Fotógrafo</th><th>Nota</th><th>Comentário</th><th>Data</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Lavínia Coimbra</td>
+                <td style="color:var(--cor-brass);">★★★★★</td>
+                <td style="color:var(--cor-texto-mudo);">Trabalho incrível, super recomendo!</td>
+                <td>10/05/2026</td>
+              </tr>
+              <tr>
+                <td>Júlia Mendes</td>
+                <td style="color:var(--cor-brass);">★★★★☆</td>
+                <td style="color:var(--cor-texto-mudo);">Ótima profissional, entrega rápida.</td>
+                <td>02/04/2026</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="assets/_common/scripts/global.js"></script>
+  <script src="assets/_common/scripts/photographers-data.js"></script>
+  <script src="assets/app/scripts/client-dashboard.js"></script>
+</body>
+</html>

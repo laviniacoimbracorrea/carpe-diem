@@ -1,0 +1,134 @@
+/* ============================================
+   Carpe Diem — Área Administrativa
+   ============================================ */
+
+.admin-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: calc(100vh - 73px);
+}
+
+/* Sidebar admin */
+.admin-sidebar {
+  background: #1C1A17;
+  padding: 28px 0;
+  position: sticky;
+  top: 73px;
+  height: calc(100vh - 73px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-sidebar-titulo {
+  font-size: 0.68rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: rgba(200,169,110,0.7);
+  font-weight: 500; padding: 0 20px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  margin-bottom: 12px;
+}
+
+.admin-nav { list-style: none; padding: 0 10px; flex: 1; }
+.admin-nav .grupo-label {
+  font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(200,169,110,0.45); font-weight: 500;
+  padding: 18px 10px 6px; display: block;
+}
+.admin-nav li a {
+  display: flex; align-items: center; gap: 9px;
+  padding: 10px 12px; border-radius: 6px;
+  font-size: 0.82rem; font-weight: 500;
+  color: rgba(214,221,209,0.55); transition: all 0.2s;
+}
+.admin-nav li a:hover { background: rgba(255,255,255,0.05); color: rgba(214,221,209,0.9); }
+.admin-nav li a.ativo { background: rgba(200,169,110,0.12); color: var(--cor-brass); }
+.admin-nav li a .icone { font-size: 0.9rem; width: 18px; text-align: center; }
+
+.admin-sair { padding: 0 10px; margin-top: auto; }
+.admin-sair a {
+  display: flex; align-items: center; gap: 9px;
+  padding: 10px 12px; border-radius: 6px;
+  font-size: 0.82rem; color: rgba(214,221,209,0.35); transition: all 0.2s;
+}
+.admin-sair a:hover { color: #c97070; }
+
+/* Conteúdo */
+.admin-conteudo {
+  background: #F0EDE6;
+  padding: 40px 44px;
+}
+
+.admin-cabecalho {
+  margin-bottom: 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px;
+}
+.admin-cabecalho h1 { font-size: 1.9rem; font-weight: 500; }
+.admin-cabecalho p { color: var(--cor-texto-mudo); font-size: 0.875rem; }
+
+/* Stats */
+.admin-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 14px; margin-bottom: 32px;
+}
+.admin-stat {
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: var(--raio-medio); padding: 22px 24px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.admin-stat-num {
+  font-family: var(--fonte-titulo); font-size: 2.2rem;
+  font-weight: 500; line-height: 1;
+}
+.admin-stat-label {
+  font-size: 0.72rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--cor-texto-mudo); font-weight: 500;
+}
+.admin-stat.verde .admin-stat-num { color: #4a7c59; }
+.admin-stat.amarelo .admin-stat-num { color: var(--cor-bark); }
+.admin-stat.vermelho .admin-stat-num { color: #8b3a2a; }
+
+/* Painel */
+.admin-painel {
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: var(--raio-medio);
+  padding: 28px 32px; margin-bottom: 20px;
+}
+.admin-painel-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 22px; padding-bottom: 16px;
+  border-bottom: 1px solid var(--cor-borda-suave);
+  flex-wrap: wrap; gap: 12px;
+}
+.admin-painel-header h2 { font-size: 1.15rem; font-weight: 500; }
+
+/* Tabela */
+/* Badges de status */
+.badge-aprovado { background: #d4edda; color: #2d6a4f; }
+.badge-pendente { background: #fff3cd; color: #7a5c00; }
+.badge-recusado { background: #fde8e8; color: #8b3a2a; }
+.badge-publicado { background: #d4edda; color: #2d6a4f; }
+.badge-rascunho  { background: #f0eee9; color: var(--cor-texto-mudo); }
+
+/* Ações na tabela */
+.acoes-tabela { display: flex; gap: 6px; flex-wrap: wrap; }
+.btn-acao {
+  padding: 5px 12px; border-radius: var(--raio-pill);
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.05em;
+  border: 1px solid var(--cor-borda); cursor: pointer;
+  background: var(--cor-ivory); color: var(--cor-texto-suave);
+  font-family: var(--fonte-texto); transition: all 0.2s;
+}
+.btn-acao:hover { background: var(--cor-void); color: var(--cor-superficie); border-color: var(--cor-void); }
+.btn-acao.verde:hover { background: #2d6a4f; border-color: #2d6a4f; color: #fff; }
+.btn-acao.vermelho:hover { background: #8b3a2a; border-color: #8b3a2a; color: #fff; }
+
+/* Formulário admin */
+@media (max-width: 900px) {
+  .admin-layout { grid-template-columns: 1fr; }
+  .admin-sidebar { position: static; height: auto; }
+  .admin-conteudo { padding: 24px 20px; }
+  .admin-stats { grid-template-columns: repeat(2,1fr); }
+  }

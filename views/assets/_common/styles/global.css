@@ -1,0 +1,265 @@
+/* ============================================
+   Carpe Diem — Estilos globais
+   Direção visual: Organic Precision v2
+   ============================================ */
+@import url("./forms.css");
+@import url("./layout.css");
+
+
+:root {
+  /* Paleta — fundo mais quente e rico */
+  --cor-ivory:        #EDE8DE;   /* mais escuro e quente que antes */
+  --cor-ivory-escuro: #DDD7C8;
+  --cor-superficie:   #F7F4EE;   /* cards e painéis — creme claro */
+  --cor-sage:         #D6DDD1;
+  --cor-sage-medio:   #B8C4B2;
+  --cor-brass:        #C8A96E;
+  --cor-bark:         #8A6A42;
+  --cor-soot:         #3A3530;
+  --cor-void:         #2B2925;
+
+  /* Alias semânticos */
+  --cor-fundo:           var(--cor-ivory);
+  --cor-texto-principal: var(--cor-void);
+  --cor-texto-suave:     var(--cor-soot);
+  --cor-texto-mudo:      #6E6860;
+  --cor-acento:          var(--cor-brass);
+  --cor-borda:           rgba(58, 53, 48, 0.16);
+  --cor-borda-suave:     rgba(58, 53, 48, 0.09);
+  --cor-sombra:          rgba(43, 41, 37, 0.07);
+  --cor-sombra-media:    rgba(43, 41, 37, 0.14);
+
+  /* Compatibilidade */
+  --cor-preto:           var(--cor-void);
+  --cor-marrom:          var(--cor-soot);
+  --cor-oliva-escuro:    var(--cor-void);
+  --cor-marrom-profundo: var(--cor-bark);
+  --cor-creme:           var(--cor-ivory);
+  --cor-bege:            var(--cor-brass);
+  --cor-branco:          var(--cor-superficie);
+
+  /* Tipografia */
+  --fonte-titulo: 'Cormorant Garamond', Georgia, serif;
+  --fonte-texto:  'DM Sans', -apple-system, sans-serif;
+
+  /* Formas */
+  --raio-pequeno: 8px;
+  --raio-medio:   16px;
+  --raio-grande:  24px;
+  --raio-pill:    999px;
+  --container:    1180px;
+}
+
+/* Reset */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--fonte-texto);
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto-principal);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  font-size: 15.5px;
+  font-weight: 400;       /* era 300 — mais legível */
+}
+
+img { max-width: 100%; display: block; }
+
+a {
+  color: var(--cor-texto-principal);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+a:hover { color: var(--cor-bark); }
+
+h1, h2, h3, h4 {
+  font-family: var(--fonte-titulo);
+  color: var(--cor-texto-principal);
+  font-weight: 500;       /* era 400 — mais presença */
+  line-height: 1.15;
+}
+
+p { font-weight: 400; }
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ===== Cabeçalho ===== */
+.topo {
+  background-color: rgba(237, 232, 222, 0.95);
+  border-bottom: 1px solid var(--cor-borda-suave);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.topo-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 0;
+}
+
+.logo {
+  font-family: var(--fonte-titulo);
+  font-size: 1.65rem;
+  font-weight: 500;
+  color: var(--cor-texto-principal);
+  letter-spacing: 0.01em;
+}
+.logo span {
+  color: var(--cor-brass);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.menu {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+  align-items: center;
+}
+
+.menu a {
+  color: var(--cor-texto-suave);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.menu a:hover { color: var(--cor-texto-principal); }
+.menu .ativo { color: var(--cor-texto-principal); }
+
+/* ===== Botões ===== */
+.botao {
+  display: inline-block;
+  padding: 11px 26px;
+  border-radius: var(--raio-pill);
+  font-weight: 500;
+  font-size: 0.78rem;
+  letter-spacing: 0.09em;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: var(--fonte-texto);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.botao-primario {
+  background-color: var(--cor-void);
+  color: var(--cor-superficie);
+}
+.botao-primario:hover {
+  background-color: var(--cor-soot);
+  color: var(--cor-superficie);
+  transform: translateY(-1px);
+}
+
+.botao-secundario {
+  background-color: transparent;
+  color: var(--cor-texto-suave);
+  border: 1px solid var(--cor-borda);
+}
+.botao-secundario:hover {
+  background-color: var(--cor-ivory-escuro);
+  color: var(--cor-texto-principal);
+}
+
+/* ===== Rodapé ===== */
+.rodape {
+  background-color: var(--cor-void);
+  color: var(--cor-sage);
+  padding: 72px 0 32px;
+  margin-top: 100px;
+}
+
+.rodape-grid {
+  display: grid;
+  grid-template-columns: 2.5fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+
+.rodape h4 {
+  color: var(--cor-superficie);
+  font-family: var(--fonte-titulo);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.rodape ul { list-style: none; }
+.rodape ul li { margin-bottom: 10px; }
+.rodape ul a {
+  color: rgba(214, 221, 209, 0.55);
+  font-size: 0.85rem;
+  font-weight: 400;
+  transition: color 0.2s;
+}
+.rodape ul a:hover { color: var(--cor-sage); }
+.rodape p { font-size: 0.875rem; color: rgba(214, 221, 209, 0.5); font-weight: 400; }
+
+.rodape-base {
+  border-top: 1px solid rgba(214, 221, 209, 0.1);
+  padding-top: 24px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: rgba(214, 221, 209, 0.3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ===== Utilidades ===== */
+.titulo-secao {
+  font-size: clamp(1.9rem, 3vw, 2.6rem);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+.subtitulo-secao {
+  color: var(--cor-texto-mudo);
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* ===== Elemento artístico: linha com ornamento ===== */
+.ornamento {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.ornamento::before,
+.ornamento::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--cor-borda);
+}
+.ornamento-texto {
+  font-family: var(--fonte-titulo);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--cor-brass);
+  white-space: nowrap;
+  letter-spacing: 0.06em;
+}
+
+/* ===== Responsivo ===== */
+@media (max-width: 768px) {
+  .container { padding: 0 20px; }
+  .menu { gap: 20px; }
+  .menu .esconder-mobile { display: none; }
+  .rodape-grid { grid-template-columns: 1fr; gap: 32px; }
+  .titulo-secao { font-size: 1.7rem; }
+}

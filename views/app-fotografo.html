@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meu Portfólio — Carpe Diem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/_common/styles/global.css" />
+  <link rel="stylesheet" href="assets/app/styles/app.css" />
+</head>
+<body>
+
+  <header class="topo">
+    <div class="container topo-inner">
+      <a href="../index.html" class="logo">Carpe<span>Diem</span></a>
+      <nav>
+        <ul class="menu">
+          <li><a href="../index.html" target="_blank">Início</a></li>
+          <li><a href="portfolios.html" target="_blank">Portfólios</a></li>
+          <li><a href="app-fotografo.html" class="ativo">Minha área</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="app-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-perfil">
+        <img class="sidebar-avatar"
+             src="assets/_common/images/profiles/lavinia.jpg"
+             alt="Avatar" />
+        <span class="sidebar-nome">Lavínia Coimbra</span>
+        <span class="sidebar-tipo">Fotógrafa</span>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li><a href="#dashboard" class="ativo nav-link" data-secao="dashboard">
+          <span class="nav-icone">◈</span> Dashboard
+        </a></li>
+        <li><a href="#perfil" class="nav-link" data-secao="perfil">
+          <span class="nav-icone">◯</span> Meu perfil
+        </a></li>
+        <li><a href="#portfolio" class="nav-link" data-secao="portfolio">
+          <span class="nav-icone">◧</span> Meu portfólio
+        </a></li>
+        <li><a href="#mensagens" class="nav-link" data-secao="mensagens">
+          <span class="nav-icone">◫</span> Mensagens
+          <span class="badge-novo" style="margin-left:auto;">3</span>
+        </a></li>
+      </ul>
+
+      <div class="sidebar-separador"></div>
+
+      <div class="sidebar-sair">
+        <a href="../index.html">
+          <span class="nav-icone">←</span> Sair
+        </a>
+      </div>
+    </aside>
+
+    <!-- Conteúdo -->
+    <main class="app-conteudo">
+
+      <!-- Dashboard -->
+      <div id="secao-dashboard" class="app-secao-pagina">
+        <div class="app-cabecalho">
+          <h1>Olá, Lavínia</h1>
+          <p>Veja um resumo do seu portfólio</p>
+        </div>
+
+        <div class="stats-grid" style="grid-template-columns: repeat(3,1fr);">
+          <div class="stat-card destaque">
+            <div class="stat-numero">32</div>
+            <div class="stat-label">Avaliações recebidas</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-numero">4.9</div>
+            <div class="stat-label">Nota média</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-numero">3</div>
+            <div class="stat-label">Mensagens novas</div>
+          </div>
+        </div>
+
+        <div class="app-secao">
+          <h2>Mensagens recentes</h2>
+          <table class="tabela-mensagens">
+            <thead>
+              <tr>
+                <th>Remetente</th>
+                <th>Assunto</th>
+                <th>Data</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="msgs-resumo"></tbody>
+          </table>
+          <a href="#mensagens" class="botao botao-secundario dashboard-open-messages" style="margin-top:18px;display:inline-flex;">Ver caixa de entrada completa</a>
+        </div>
+      </div>
+
+      <!-- Perfil -->
+      <div id="secao-perfil" class="app-secao-pagina" style="display:none;">
+        <div class="app-cabecalho">
+          <h1>Meu perfil</h1>
+          <p>Atualize seus dados pessoais e de acesso</p>
+        </div>
+
+        <div class="app-secao">
+          <h2>Foto e informações básicas</h2>
+          <form class="perfil-form" onsubmit="event.preventDefault(); mostrarAviso('Perfil salvo com sucesso!')">
+            <div class="perfil-avatar-wrapper">
+              <img class="perfil-avatar"
+                   src="assets/public/images/capa-retrato.jpg"
+                   alt="Avatar" />
+              <div class="perfil-avatar-info">
+                <h4>Foto de perfil</h4>
+                <p>Recomendado: quadrado, mínimo 200×200px</p>
+                <input type="file" accept="image/*" style="font-size:0.82rem;" />
+              </div>
+            </div>
+
+            <div class="form-linha">
+              <div class="campo">
+                <label>Nome completo</label>
+                <input type="text" value="Lavínia Coimbra" />
+              </div>
+              <div class="campo">
+                <label>E-mail</label>
+                <input type="email" value="lavinia@email.com" />
+              </div>
+            </div>
+            <div class="form-linha">
+              <div class="campo">
+                <label>Cidade</label>
+                <input type="text" value="Curitiba" />
+              </div>
+              <div class="campo">
+                <label>Estado</label>
+                <select>
+                  <option selected>PR</option>
+                  <option>SC</option>
+                  <option>RS</option>
+                </select>
+              </div>
+            </div>
+            <div class="campo">
+              <label>Especialidade principal</label>
+              <select>
+                <option selected>Casamentos</option>
+                <option>Ensaios</option>
+                <option>Eventos</option>
+                <option>Família</option>
+                <option>Retrato</option>
+              </select>
+            </div>
+            <div>
+              <button type="submit" class="botao botao-primario">Salvar alterações</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="app-secao">
+          <h2>Alterar senha</h2>
+          <form class="perfil-form" style="max-width:420px;" onsubmit="event.preventDefault(); mostrarAviso('Senha alterada!')">
+            <div class="campo">
+              <label>Senha atual</label>
+              <input type="password" placeholder="••••••••" />
+            </div>
+            <div class="campo">
+              <label>Nova senha</label>
+              <input type="password" placeholder="••••••••" />
+            </div>
+            <div class="campo">
+              <label>Confirmar nova senha</label>
+              <input type="password" placeholder="••••••••" />
+            </div>
+            <button type="submit" class="botao botao-primario">Alterar senha</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Portfólio -->
+      <div id="secao-portfolio" class="app-secao-pagina" style="display:none;">
+        <div class="app-cabecalho">
+          <h1>Meu portfólio</h1>
+          <p>Gerencie as fotos exibidas publicamente</p>
+        </div>
+
+        <div class="app-secao">
+          <h2>Biografia / Descrição pública</h2>
+          <form onsubmit="event.preventDefault(); mostrarAviso('Biografia salva!')">
+            <div class="campo" style="margin-bottom:14px;">
+              <label>Texto exibido no seu portfólio público</label>
+              <textarea id="campo-bio" rows="4" style="width:100%;padding:12px 16px;border:1px solid var(--cor-borda);border-radius:var(--raio-pequeno);font-family:var(--fonte-texto);font-size:0.875rem;background:var(--cor-ivory);color:var(--cor-texto-principal);outline:none;resize:vertical;">Fotógrafa especializada em casamentos com olhar autoral e clima leve. Atendo casais que valorizam leveza, espontaneidade e memórias bem cuidadas.</textarea>
+            </div>
+            <div class="campo" style="margin-bottom:14px;">
+              <label>Descrição completa (exibida na página do portfólio)</label>
+              <textarea id="campo-bio-completa" rows="5" style="width:100%;padding:12px 16px;border:1px solid var(--cor-borda);border-radius:var(--raio-pequeno);font-family:var(--fonte-texto);font-size:0.875rem;background:var(--cor-ivory);color:var(--cor-texto-principal);outline:none;resize:vertical;">Há 6 anos fotografo casamentos em Curitiba e região. Acredito que cada detalhe conta uma história — do nervosismo antes da cerimônia à última dança da noite.</textarea>
+            </div>
+            <button type="submit" class="botao botao-primario">Salvar biografia</button>
+          </form>
+        </div>
+
+        <div class="app-secao">
+          <h2>Foto de capa</h2>
+          <div style="display:grid; grid-template-columns:200px 1fr; gap:24px; align-items:center;">
+            <img src="assets/public/images/Portfolio - Michael & Melanie Photography.jpg"
+                 style="width:100%; height:140px; object-fit:cover; border-radius:var(--raio-pequeno); border:1px solid var(--cor-borda-suave);" alt="Capa" />
+            <div>
+              <p style="font-size:0.875rem; color:var(--cor-texto-mudo); margin-bottom:14px;">
+                Esta é a imagem exibida no card da lista de portfólios. Recomendado: proporção 3:4.
+              </p>
+              <input type="file" accept="image/*" style="font-size:0.82rem;" />
+            </div>
+          </div>
+        </div>
+
+        <div class="app-secao">
+          <h2>Galeria de fotos</h2>
+          <div class="galeria-gerenciar" id="galeria-gerenciar"></div>
+          <button class="botao botao-secundario" onclick="mostrarAviso('Galeria salva!')">Salvar galeria</button>
+        </div>
+      </div>
+
+      <!-- Mensagens -->
+      <div id="secao-mensagens" class="app-secao-pagina" style="display:none;">
+        <div class="app-cabecalho">
+          <h1>Mensagens</h1>
+          <p>Clientes interessados no seu trabalho</p>
+        </div>
+        <div class="app-secao">
+          <h2>Caixa de entrada</h2>
+          <table class="tabela-mensagens">
+            <thead>
+              <tr>
+                <th>Remetente</th>
+                <th>Assunto</th>
+                <th>Mensagem</th>
+                <th>Data</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="msgs-inbox"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="assets/_common/scripts/global.js"></script>
+  <script src="assets/_common/scripts/section-navigation.js"></script>
+  <script src="assets/_common/scripts/photographers-data.js"></script>
+  <script src="assets/app/scripts/photographer-dashboard.js"></script>
+</body>
+</html>

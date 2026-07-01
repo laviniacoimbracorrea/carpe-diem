@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entrar — Carpe Diem</title>
+  <meta name="description" content="Acesse a plataforma como cliente, fotógrafo ou administrador." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/_common/styles/global.css" />
+  <link rel="stylesheet" href="assets/public/styles/public.css" />
+</head>
+<body>
+
+  <header class="topo">
+    <div class="container topo-inner">
+      <a href="../index.html" class="logo">Carpe<span>Diem</span></a>
+      <nav>
+        <ul class="menu">
+          <li><a href="../index.html">Início</a></li>
+          <li><a href="portfolios.html">Portfólios</a></li>
+          <li><a href="about.html" class="esconder-mobile">Sobre</a></li>
+          <li><a href="contact.html" class="esconder-mobile">Contato</a></li>
+          <li><a href="faq.html" class="esconder-mobile">FAQ</a></li>
+          <li><a href="login.html" class="botao botao-secundario">Entrar</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="tela-auth">
+    <!-- Lado visual -->
+    <div class="auth-arte">
+      <div>
+        <h2>Olhares que contam histórias da sua região.</h2>
+        <p>Acesse para explorar portfólios completos ou divulgar seu trabalho.</p>
+      </div>
+    </div>
+
+    <!-- Formulários -->
+    <div class="auth-formulario">
+      <div class="caixa-auth">
+        <h1 id="titulo-auth">Entrar</h1>
+        <p class="sub" id="sub-auth">Escolha o tipo de acesso para continuar.</p>
+
+        <div class="abas" role="tablist">
+          <button class="aba ativa" data-alvo="cliente">Cliente</button>
+          <button class="aba" data-alvo="fotografo">Fotógrafo</button>
+          <button class="aba" data-alvo="admin">Admin</button>
+        </div>
+
+        <!-- Painel: Cliente -->
+        <div class="painel ativo" data-painel="cliente">
+          <div class="aviso-tipo">
+            Como cliente você acessa portfólios completos e entra em contato com fotógrafos.
+          </div>
+          <form class="formulario" data-tipo="cliente" data-acao="login">
+            <div class="campo">
+              <label>E-mail</label>
+              <input type="email" placeholder="seu@email.com" required />
+            </div>
+            <div class="campo">
+              <label>Senha</label>
+              <input type="password" placeholder="••••••••" required />
+            </div>
+            <button type="submit" class="botao botao-primario">Entrar como cliente</button>
+          </form>
+          <p class="troca-modo">
+            Não tem conta? <a href="register.html?tipo=cliente">Cadastre-se</a>
+          </p>
+        </div>
+
+        <!-- Painel: Fotógrafo -->
+        <div class="painel" data-painel="fotografo">
+          <div class="aviso-tipo">
+            Acesso restrito a fotógrafos aprovados. Após o login, você pode editar seu portfólio e ver mensagens recebidas.
+          </div>
+          <form class="formulario" data-tipo="fotografo" data-acao="login">
+            <div class="campo">
+              <label>E-mail profissional</label>
+              <input type="email" placeholder="estudio@email.com" required />
+            </div>
+            <div class="campo">
+              <label>Senha</label>
+              <input type="password" placeholder="••••••••" required />
+            </div>
+            <button type="submit" class="botao botao-primario">Entrar como fotógrafo</button>
+          </form>
+          <p class="troca-modo">
+            Quer divulgar seu trabalho? <a href="register.html?tipo=fotografo">Enviar requisição</a>
+          </p>
+        </div>
+
+        <!-- Painel: Admin -->
+        <div class="painel" data-painel="admin">
+          <div class="aviso-tipo">
+            Área administrativa. Apenas contas pré-cadastradas no sistema podem acessar.
+          </div>
+          <form class="formulario" data-tipo="administrador" data-acao="login">
+            <div class="campo">
+              <label>E-mail administrativo</label>
+              <input type="email" placeholder="admin@carpediem.com" required />
+            </div>
+            <div class="campo">
+              <label>Senha</label>
+              <input type="password" placeholder="••••••••" required />
+            </div>
+            <button type="submit" class="botao botao-primario">Entrar no painel</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="assets/_common/scripts/global.js"></script>
+  <script src="assets/public/scripts/login-tabs.js"></script>
+  <script src="assets/public/scripts/login-redirect.js"></script>
+</body>
+</html>

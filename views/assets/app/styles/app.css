@@ -1,0 +1,234 @@
+/* ============================================
+   Carpe Diem — Área de Aplicação
+   Estilos do dashboard do usuário / fotógrafo
+   ============================================ */
+
+/* Layout com sidebar */
+.app-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: calc(100vh - 73px);
+}
+
+/* Sidebar */
+.sidebar {
+  background: var(--cor-void);
+  padding: 36px 0;
+  position: sticky;
+  top: 73px;
+  height: calc(100vh - 73px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-perfil {
+  padding: 0 28px 32px;
+  border-bottom: 1px solid rgba(214,221,209,0.1);
+  margin-bottom: 16px;
+}
+
+.sidebar-avatar {
+  width: 64px; height: 64px;
+  border-radius: 50%; object-fit: cover;
+  border: 2px solid var(--cor-brass);
+  margin-bottom: 12px;
+}
+
+.sidebar-nome {
+  font-family: var(--fonte-titulo);
+  font-size: 1.1rem; font-weight: 500;
+  color: var(--cor-superficie);
+  display: block; margin-bottom: 3px;
+}
+
+.sidebar-tipo {
+  font-size: 0.72rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--cor-brass);
+  font-weight: 500;
+}
+
+.sidebar-nav { list-style: none; padding: 0 12px; flex: 1; }
+
+.sidebar-nav li a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 16px; border-radius: var(--raio-pequeno);
+  font-size: 0.85rem; font-weight: 500;
+  color: rgba(214,221,209,0.65);
+  transition: all 0.2s; text-decoration: none;
+}
+.sidebar-nav li a:hover {
+  background: rgba(255,255,255,0.06);
+  color: var(--cor-superficie);
+}
+.sidebar-nav li a.ativo {
+  background: rgba(200,169,110,0.15);
+  color: var(--cor-brass);
+}
+.sidebar-nav li a .nav-icone { font-size: 1rem; width: 20px; text-align: center; }
+
+.sidebar-separador {
+  height: 1px; background: rgba(214,221,209,0.08);
+  margin: 10px 28px;
+}
+
+.sidebar-sair {
+  padding: 0 12px; margin-top: auto;
+}
+.sidebar-sair a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 16px; border-radius: var(--raio-pequeno);
+  font-size: 0.85rem; font-weight: 500;
+  color: rgba(214,221,209,0.4); transition: all 0.2s;
+}
+.sidebar-sair a:hover { color: #c97070; background: rgba(180,80,80,0.08); }
+
+/* Conteúdo principal */
+.app-conteudo {
+  background: var(--cor-fundo);
+  padding: 44px 48px;
+}
+
+.app-cabecalho {
+  margin-bottom: 36px;
+}
+.app-cabecalho h1 {
+  font-size: 2rem; font-weight: 500; margin-bottom: 4px;
+}
+.app-cabecalho p { color: var(--cor-texto-mudo); font-size: 0.875rem; }
+
+/* Cards de estatísticas */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.stat-card {
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: var(--raio-medio);
+  padding: 24px;
+}
+.stat-numero {
+  font-family: var(--fonte-titulo);
+  font-size: 2.4rem; font-weight: 500;
+  color: var(--cor-texto-principal);
+  line-height: 1; margin-bottom: 6px;
+}
+.stat-label {
+  font-size: 0.78rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--cor-texto-mudo);
+  font-weight: 500;
+}
+.stat-card.destaque { border-top: 2px solid var(--cor-brass); }
+
+/* Seções do app */
+.app-secao {
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda-suave);
+  border-radius: var(--raio-medio);
+  padding: 32px;
+  margin-bottom: 24px;
+}
+.app-secao h2 {
+  font-size: 1.2rem; font-weight: 500;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--cor-borda-suave);
+}
+
+/* Formulário de perfil */
+.perfil-avatar-wrapper {
+  display: flex; align-items: center; gap: 24px;
+  padding: 20px; background: var(--cor-ivory);
+  border-radius: var(--raio-medio);
+  border: 1px solid var(--cor-borda-suave);
+}
+.perfil-avatar {
+  width: 80px; height: 80px; border-radius: 50%;
+  object-fit: cover; border: 2px solid var(--cor-ivory-escuro);
+}
+.perfil-avatar-info h4 { font-size: 1rem; font-weight: 500; margin-bottom: 4px; }
+.perfil-avatar-info p { font-size: 0.8rem; color: var(--cor-texto-mudo); margin-bottom: 10px; }
+
+/* Galeria de fotos do fotógrafo */
+.galeria-gerenciar {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 12px; margin-bottom: 20px;
+}
+.galeria-item {
+  position: relative; aspect-ratio: 1;
+  border-radius: var(--raio-pequeno); overflow: hidden;
+  border: 1px solid var(--cor-borda-suave);
+}
+.galeria-item img { width: 100%; height: 100%; object-fit: cover; }
+.galeria-item-remover {
+  position: absolute; top: 6px; right: 6px;
+  background: rgba(43,41,37,0.75); color: var(--cor-superficie);
+  border: none; border-radius: 50%; width: 26px; height: 26px;
+  cursor: pointer; font-size: 0.85rem;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.2s;
+}
+.galeria-item:hover .galeria-item-remover { opacity: 1; }
+
+.galeria-add {
+  aspect-ratio: 1; border-radius: var(--raio-pequeno);
+  border: 2px dashed var(--cor-borda);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  cursor: pointer; gap: 6px; transition: border-color 0.2s;
+  background: var(--cor-ivory);
+}
+.galeria-add:hover { border-color: var(--cor-brass); }
+.galeria-add span:first-child { font-size: 1.5rem; color: var(--cor-brass); }
+.galeria-add span:last-child { font-size: 0.78rem; color: var(--cor-texto-mudo); }
+
+/* Tabela de mensagens */
+@media (max-width: 900px) {
+  .app-layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; height: auto; flex-direction: row; flex-wrap: wrap; padding: 16px; }
+  .sidebar-perfil { display: none; }
+  .app-conteudo { padding: 24px 20px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .galeria-gerenciar { grid-template-columns: repeat(3, 1fr); }
+}
+
+
+/* Client dashboard favorites */
+.client-favorite-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: var(--cor-ivory);
+  border-radius: var(--raio-pequeno);
+  border: 1px solid var(--cor-borda-suave);
+}
+
+.client-favorite-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.client-favorite-info {
+  flex: 1;
+}
+
+.client-favorite-info strong {
+  font-family: var(--fonte-titulo);
+  font-size: 1.05rem;
+}
+
+.client-favorite-info p {
+  font-size: 0.8rem;
+  color: var(--cor-texto-mudo);
+}
+
+.client-favorite-action {
+  font-size: 0.75rem;
+}

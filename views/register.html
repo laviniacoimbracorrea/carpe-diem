@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro — Carpe Diem</title>
+  <meta name="description" content="Cadastre-se como cliente ou envie sua requisição como fotógrafo." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/_common/styles/global.css" />
+  <link rel="stylesheet" href="assets/public/styles/public.css" />
+</head>
+<body>
+
+  <header class="topo">
+    <div class="container topo-inner">
+      <a href="../index.html" class="logo">Carpe<span>Diem</span></a>
+      <nav>
+        <ul class="menu">
+          <li><a href="../index.html">Início</a></li>
+          <li><a href="portfolios.html">Portfólios</a></li>
+          <li><a href="about.html" class="esconder-mobile">Sobre</a></li>
+          <li><a href="contact.html" class="esconder-mobile">Contato</a></li>
+          <li><a href="faq.html" class="esconder-mobile">FAQ</a></li>
+          <li><a href="login.html" class="botao botao-secundario">Entrar</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="tela-auth">
+    <div class="auth-arte">
+      <div>
+        <h2>Faça parte da nossa comunidade fotográfica regional.</h2>
+        <p>Crie sua conta em poucos passos.</p>
+      </div>
+    </div>
+
+    <div class="auth-formulario">
+      <div class="caixa-auth">
+        <h1>Criar conta</h1>
+        <p class="sub">Selecione o tipo de cadastro.</p>
+
+        <div class="abas">
+          <button class="aba ativa" data-alvo="cliente">Sou cliente</button>
+          <button class="aba" data-alvo="fotografo">Sou fotógrafo</button>
+        </div>
+
+        <!-- Cadastro Cliente -->
+        <div class="painel ativo" data-painel="cliente">
+          <div class="aviso-tipo">
+            Cadastro rápido. Você terá acesso aos portfólios e à área de mensagens.
+          </div>
+          <form class="formulario" data-tipo="cliente" data-acao="cadastro">
+            <div class="campo">
+              <label>Nome</label>
+              <input type="text" placeholder="Seu nome" required />
+            </div>
+            <div class="campo">
+              <label>E-mail</label>
+              <input type="email" placeholder="seu@email.com" required />
+            </div>
+            <div class="campo">
+              <label>Senha</label>
+              <input type="password" placeholder="Mínimo 6 caracteres" required />
+            </div>
+            <button type="submit" class="botao botao-primario">Criar conta de cliente</button>
+          </form>
+        </div>
+
+        <!-- Cadastro Fotógrafo -->
+        <div class="painel" data-painel="fotografo">
+          <div class="aviso-tipo">
+            Sua requisição passa por curadoria do administrador antes de ser aprovada. Você receberá uma resposta por e-mail.
+          </div>
+          <form class="formulario" data-tipo="fotografo" data-acao="cadastro">
+            <div class="campo">
+              <label>Nome completo</label>
+              <input type="text" placeholder="Nome profissional" required />
+            </div>
+            <div class="campo">
+              <label>E-mail</label>
+              <input type="email" placeholder="estudio@email.com" required />
+            </div>
+            <div class="campo">
+              <label>Senha</label>
+              <input type="password" placeholder="••••••••" required />
+            </div>
+            <div class="campo">
+              <label>Especialidade</label>
+              <select required>
+                <option value="">Selecione...</option>
+                <option>Casamentos</option>
+                <option>Ensaios</option>
+                <option>Eventos</option>
+                <option>Família / Newborn</option>
+                <option>Retrato</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label>Cidade / Região de atuação</label>
+              <input type="text" placeholder="Ex: Curitiba e região" required />
+            </div>
+            <div class="campo">
+              <label>Breve descrição</label>
+              <textarea rows="3" placeholder="Conte um pouco sobre o seu trabalho..."></textarea>
+            </div>
+            <div class="campo">
+              <label>Fotos do portfólio</label>
+              <input type="file" multiple accept="image/*" />
+            </div>
+            <button type="submit" class="botao botao-primario">Enviar requisição</button>
+          </form>
+        </div>
+
+        <p class="troca-modo">Já tem conta? <a href="login.html">Entrar</a></p>
+      </div>
+    </div>
+  </main>
+
+  <script src="assets/_common/scripts/global.js"></script>
+  <script src="assets/public/scripts/login-tabs.js"></script>
+</body>
+</html>

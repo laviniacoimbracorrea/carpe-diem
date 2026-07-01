@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel Administrativo — Carpe Diem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/_common/styles/global.css" />
+  <link rel="stylesheet" href="assets/admin/styles/admin.css" />
+</head>
+<body>
+
+  <header class="topo">
+    <div class="container topo-inner">
+      <a href="../index.html" class="logo">Carpe<span>Diem</span></a>
+      <nav>
+        <ul class="menu">
+          <li><a href="../index.html" target="_blank">← Site público</a></li>
+          <li style="font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--cor-brass); font-weight:500;">
+            Painel Admin
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="admin-layout">
+
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-titulo">Administração</div>
+
+      <ul class="admin-nav">
+        <span class="grupo-label">Visão geral</span>
+        <li><a href="#" class="ativo admin-nav-link" data-secao="dashboard">
+          <span class="icone">◈</span> Dashboard
+        </a></li>
+        <li><a href="#" class="admin-nav-link" data-secao="perfil-admin">
+          <span class="icone">◯</span> Meu perfil
+        </a></li>
+
+        <span class="grupo-label">Gestão</span>
+        <li><a href="#" class="admin-nav-link" data-secao="fotografos">
+          <span class="icone">◧</span> Fotógrafos
+        </a></li>
+        <li><a href="#" class="admin-nav-link" data-secao="clientes">
+          <span class="icone">◫</span> Clientes
+        </a></li>
+        <li><a href="#" class="admin-nav-link" data-secao="administradores">
+          <span class="icone">◉</span> Administradores
+        </a></li>
+
+        <span class="grupo-label">Conteúdo</span>
+        <li><a href="#" class="admin-nav-link" data-secao="faqs-admin">
+          <span class="icone">◌</span> FAQs
+        </a></li>
+      </ul>
+
+      <div class="admin-sair">
+        <a href="../index.html"><span class="icone">←</span> Sair do painel</a>
+      </div>
+    </aside>
+
+    <!-- Conteúdo -->
+    <main class="admin-conteudo">
+
+      <!-- ── Dashboard ── -->
+      <div id="secao-dashboard" class="app-secao-pagina ativo">
+        <div class="admin-cabecalho">
+          <div>
+            <h1>Dashboard</h1>
+            <p>Visão geral do sistema — maio 2026</p>
+          </div>
+        </div>
+
+        <div class="admin-stats">
+          <div class="admin-stat verde">
+            <span class="admin-stat-num">6</span>
+            <span class="admin-stat-label">Fotógrafos ativos</span>
+          </div>
+          <div class="admin-stat amarelo">
+            <span class="admin-stat-num">2</span>
+            <span class="admin-stat-label">Aguardando aprovação</span>
+          </div>
+          <div class="admin-stat">
+            <span class="admin-stat-num">143</span>
+            <span class="admin-stat-label">Clientes cadastrados</span>
+          </div>
+          <div class="admin-stat">
+            <span class="admin-stat-num">18</span>
+            <span class="admin-stat-label">FAQs publicadas</span>
+          </div>
+        </div>
+
+        <!-- Requisições pendentes -->
+        <div class="admin-painel">
+          <div class="admin-painel-header">
+            <h2>Requisições pendentes de fotógrafos</h2>
+            <span class="badge badge-pendente">2 pendentes</span>
+          </div>
+          <table class="admin-tabela">
+            <thead>
+              <tr><th>Nome</th><th>Cidade</th><th>Especialidade</th><th>Enviado em</th><th>Ações</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Patricia Kohl</strong><br><span style="font-size:0.78rem;color:var(--cor-texto-mudo);">patricia@email.com</span></td>
+                <td>Blumenau, SC</td>
+                <td>Ensaios</td>
+                <td>15/05/2026</td>
+                <td>
+                  <div class="acoes-tabela">
+                    <button class="btn-acao verde" onclick="aprovarFotografo(this)">Aprovar</button>
+                    <button class="btn-acao vermelho" onclick="recusarFotografo(this)">Recusar</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Marcos Duarte</strong><br><span style="font-size:0.78rem;color:var(--cor-texto-mudo);">marcos@foto.com</span></td>
+                <td>Londrina, PR</td>
+                <td>Eventos</td>
+                <td>17/05/2026</td>
+                <td>
+                  <div class="acoes-tabela">
+                    <button class="btn-acao verde" onclick="aprovarFotografo(this)">Aprovar</button>
+                    <button class="btn-acao vermelho" onclick="recusarFotografo(this)">Recusar</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Fotógrafos ativos -->
+        <div class="admin-painel">
+          <div class="admin-painel-header">
+            <h2>Fotógrafos ativos</h2>
+          </div>
+          <table class="admin-tabela" id="tabela-ativos"></table>
+        </div>
+      </div>
+
+      <!-- ── Perfil Admin ── -->
+      <div id="secao-perfil-admin" class="app-secao-pagina">
+        <div class="admin-cabecalho"><div><h1>Meu perfil</h1><p>Dados do administrador</p></div></div>
+        <div class="admin-painel">
+          <div class="admin-painel-header"><h2>Informações pessoais</h2></div>
+          <form class="admin-form" onsubmit="event.preventDefault(); mostrarAviso('Perfil salvo!')">
+            <div class="form-linha">
+              <div class="campo"><label>Nome</label><input type="text" value="Admin Carpe Diem" /></div>
+              <div class="campo"><label>E-mail</label><input type="email" value="admin@carpediem.com.br" /></div>
+            </div>
+            <div class="campo"><label>Nova senha</label><input type="password" placeholder="••••••••" /></div>
+            <div class="campo"><label>Confirmar senha</label><input type="password" placeholder="••••••••" /></div>
+            <div><button type="submit" class="botao botao-primario">Salvar</button></div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ── Fotógrafos ── -->
+      <div id="secao-fotografos" class="app-secao-pagina">
+        <div class="admin-cabecalho">
+          <div><h1>Fotógrafos</h1><p>Gerencie os portfólios publicados</p></div>
+        </div>
+        <div class="admin-painel">
+          <div class="admin-painel-header">
+            <h2>Todos os fotógrafos</h2>
+            <input type="text" id="busca-fotografos" placeholder="Buscar..." style="padding:8px 14px;border:1px solid var(--cor-borda);border-radius:var(--raio-pill);font-size:0.85rem;background:var(--cor-ivory);outline:none;width:220px;" />
+          </div>
+          <table class="admin-tabela" id="tabela-fotografos-completa"></table>
+        </div>
+      </div>
+
+      <!-- ── Clientes ── -->
+      <div id="secao-clientes" class="app-secao-pagina">
+        <div class="admin-cabecalho"><div><h1>Clientes</h1><p>Usuários cadastrados como clientes</p></div></div>
+        <div class="admin-painel">
+          <div class="admin-painel-header"><h2>Lista de clientes</h2></div>
+          <table class="admin-tabela">
+            <thead><tr><th>Nome</th><th>E-mail</th><th>Cadastro</th><th>Avaliações</th><th>Ações</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>João Silva</td><td>joao@email.com</td><td>10/01/2026</td><td>2</td>
+                <td><div class="acoes-tabela"><button class="btn-acao vermelho" onclick="mostrarAviso('Conta removida')">Remover</button></div></td>
+              </tr>
+              <tr>
+                <td>Camila Rocha</td><td>camila@email.com</td><td>22/02/2026</td><td>5</td>
+                <td><div class="acoes-tabela"><button class="btn-acao vermelho" onclick="mostrarAviso('Conta removida')">Remover</button></div></td>
+              </tr>
+              <tr>
+                <td>Pedro Martins</td><td>pedro@email.com</td><td>05/03/2026</td><td>0</td>
+                <td><div class="acoes-tabela"><button class="btn-acao vermelho" onclick="mostrarAviso('Conta removida')">Remover</button></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── Administradores ── -->
+      <div id="secao-administradores" class="app-secao-pagina">
+        <div class="admin-cabecalho"><div><h1>Administradores</h1><p>Gerencie contas com acesso ao painel</p></div></div>
+
+        <div class="admin-painel" style="margin-bottom:20px;">
+          <div class="admin-painel-header"><h2>Adicionar administrador</h2></div>
+          <form class="admin-form" onsubmit="adicionarAdmin(event)">
+            <div class="form-linha">
+              <div class="campo"><label>Nome</label><input type="text" id="admin-nome" placeholder="Nome completo" required /></div>
+              <div class="campo"><label>E-mail</label><input type="email" id="admin-email" placeholder="admin@email.com" required /></div>
+            </div>
+            <div class="campo"><label>Senha inicial</label><input type="password" id="admin-senha" placeholder="••••••••" required /></div>
+            <div><button type="submit" class="botao botao-primario">Adicionar administrador</button></div>
+          </form>
+        </div>
+
+        <div class="admin-painel">
+          <div class="admin-painel-header"><h2>Administradores ativos</h2></div>
+          <table class="admin-tabela">
+            <thead><tr><th>Nome</th><th>E-mail</th><th>Desde</th><th>Ações</th></tr></thead>
+            <tbody id="tabela-admins">
+              <tr>
+                <td><strong>Admin Principal</strong></td><td>admin@carpediem.com.br</td><td>01/01/2026</td>
+                <td><span style="font-size:0.78rem;color:var(--cor-texto-mudo);">Conta raiz</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── FAQs ── -->
+      <div id="secao-faqs-admin" class="app-secao-pagina">
+        <div class="admin-cabecalho"><div><h1>Gestão de FAQs</h1><p>Adicione, edite, publique e remova perguntas frequentes</p></div></div>
+
+        <div class="admin-painel" style="margin-bottom:20px;">
+          <div class="admin-painel-header"><h2>Nova pergunta</h2></div>
+          <form class="admin-form" onsubmit="adicionarFaq(event)">
+            <div class="campo"><label>Categoria</label>
+              <select id="faq-categoria">
+                <option>Para clientes</option>
+                <option>Para fotógrafos</option>
+                <option>Conta e acesso</option>
+              </select>
+            </div>
+            <div class="campo"><label>Pergunta</label><input type="text" id="faq-pergunta" placeholder="Digite a pergunta..." required /></div>
+            <div class="campo"><label>Resposta</label><textarea id="faq-resposta" rows="3" placeholder="Digite a resposta..." required></textarea></div>
+            <div><button type="submit" class="botao botao-primario">Adicionar FAQ</button></div>
+          </form>
+        </div>
+
+        <div class="admin-painel">
+          <div class="admin-painel-header"><h2>FAQs cadastradas</h2></div>
+          <table class="admin-tabela">
+            <thead><tr><th>Categoria</th><th>Pergunta</th><th>Status</th><th>Ações</th></tr></thead>
+            <tbody id="tabela-faqs">
+              <tr>
+                <td>Para clientes</td>
+                <td>Preciso criar uma conta para ver os portfólios?</td>
+                <td><span class="badge badge-publicado">Publicada</span></td>
+                <td><div class="acoes-tabela">
+                  <button class="btn-acao" onclick="toggleFaqStatus(this)">Despublicar</button>
+                  <button class="btn-acao vermelho" onclick="removerFaq(this)">Remover</button>
+                </div></td>
+              </tr>
+              <tr>
+                <td>Para fotógrafos</td>
+                <td>Como cadastro meu portfólio na plataforma?</td>
+                <td><span class="badge badge-publicado">Publicada</span></td>
+                <td><div class="acoes-tabela">
+                  <button class="btn-acao" onclick="toggleFaqStatus(this)">Despublicar</button>
+                  <button class="btn-acao vermelho" onclick="removerFaq(this)">Remover</button>
+                </div></td>
+              </tr>
+              <tr>
+                <td>Conta e acesso</td>
+                <td>Esqueci minha senha. Como recupero o acesso?</td>
+                <td><span class="badge badge-rascunho">Rascunho</span></td>
+                <td><div class="acoes-tabela">
+                  <button class="btn-acao verde" onclick="toggleFaqStatus(this)">Publicar</button>
+                  <button class="btn-acao vermelho" onclick="removerFaq(this)">Remover</button>
+                </div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="assets/_common/scripts/global.js"></script>
+  <script src="assets/_common/scripts/section-navigation.js"></script>
+  <script src="assets/_common/scripts/photographers-data.js"></script>
+  <script src="assets/admin/scripts/admin-dashboard.js"></script>
+</body>
+</html>
