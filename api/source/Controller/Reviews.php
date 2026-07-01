@@ -10,9 +10,23 @@ class Reviews extends Api
 
     public function listAll (array $data): void 
     { 
-        $review = new Review(); 
-        $this->call(200,"success","Lista de avaliações","success")->back($review->selectAll()); 
+     $review = new Review(); 
+        if(empty($review)){
+           $this->call(
+            404,
+            "error",
+            "Nenhuma mensagem encontrada",
+            "error"
+        )->back();
+      return;
+        }
 
+        $this->call(
+            200,
+            "success",
+            "Lista de avaliações",
+            "success"
+        )->back($review->selectAll()); 
     
     }
 
@@ -32,21 +46,36 @@ class Reviews extends Api
             return;
         }
 
-        $this->call(200,"success","Avaliação encontrada","success")->back($review);
+        $this->call(
+            200,
+            "success",
+            "Avaliação encontrada",
+            "success"
+        )->back($review);
     }
 
     public function insert(array $data): void
     {
+        if(!$this->authToken(3))
+       {
+          $this->call(
+            401,
+            "unauthorized",
+            "Usuário não está autenticado (sem token ou token inválido).",
+            "error"
+            )->back();
+        return;
+        }
 
-        if(empty($data["user_id"]) || empty($data["portfolio_id"]) || empty($data["evaluate"])) 
+        if(empty($data["user_id"]) || empty($data["portfolio_id"]) || empty($data["evaluate"]))
         {
             $this->call(
             400,
             "error",
             "Dados obrigatórios não informados",
-            "error" )->back();
-
-            return;
+            "error" 
+        )->back();
+       return;
         }
 
         $review = new Review(null, $data["user_id"], $data["portfolio_id"], $data["evaluate"]);
@@ -63,8 +92,7 @@ class Reviews extends Api
             return;
         }
 
-        $response = 
-        [
+        $response = [
             "id" => $review->getId(),
             "user_id" => $review->getUserId(),
             "portfolio_id" => $review->getPortfolioId(),
@@ -81,9 +109,19 @@ class Reviews extends Api
 
     public function deleteById(array $data): void
     {
+       if(!$this->authToken(3))
+       {
+          $this->call(
+            401,
+            "unauthorized",
+            "Usuário não está autenticado (sem token ou token inválido).",
+            "error"
+            )->back();
+        return;
+       }
 
-        if(empty($data["review_id"])) {
-
+        if(empty($data["review_id"])) 
+    {
             $this->call(
             400,
             "error",
@@ -112,6 +150,17 @@ class Reviews extends Api
 
     public function updateById(array $data): void
     {
+        if(!$this->authToken(3))
+       {
+          $this->call(
+            401,
+            "unauthorized",
+            "Usuário não está autenticado (sem token ou token inválido).",
+            "error"
+            )->back();
+        return;
+        }
+
         if(empty($data["review_id"]) || empty($data["user_id"]) || empty($data["portfolio_id"]) || empty($data["evaluate"])) 
         {
             $this->call(
@@ -120,8 +169,7 @@ class Reviews extends Api
             "Dados obrigatórios não informados",
             "error"
             )->back();
-
-            return;
+        return;
         }
 
         $review = new Review(null, $data["user_id"], $data["portfolio_id"], $data["evaluate"]);
@@ -138,15 +186,19 @@ class Reviews extends Api
             return;
         }
 
-        $response = 
-        [
+        $response = [
             "id" => $review->getId(),
             "user_id" => $review->getUserId(),
             "portfolio_id" => $review->getPortfolioId(),
             "evaluate" => $review->getEvaluate()
         ];
 
-        $this->call(200, "success", "Avaliação atualizada com sucesso", "success")->back($response);
+        $this->call(
+            200, 
+            "success", 
+            "Avaliação atualizada com sucesso", 
+            "success"
+        )->back($response);
     }
     
 }

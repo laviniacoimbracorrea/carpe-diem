@@ -19,11 +19,15 @@ class Messages extends Api
           "Nenhuma mensagem encontrada",
           "error"
         )->back();
-
-        return;
+    return;
       }
 
-      $this->call(200,"success","Lista de Mensagens","success")->back($messages->selectAll());
+      $this->call(
+        200,
+        "success",
+        "Lista de Mensagens",
+        "success"
+    )->back($messages->selectAll());
    }
 
 
@@ -49,6 +53,18 @@ class Messages extends Api
 
    public function insert(array $data):void 
    {
+        if(!$this->authToken(3))
+        {
+          $this->call(
+            401,
+            "unauthorized",
+            "Usuário não está autenticado (sem token ou token inválido).",
+            "error"
+            )->back();
+        return;
+        }
+
+
         if(empty($data['user_photographer_id']) || empty($data['user_id']) || empty($data['message']))
         {
             $this->call(
@@ -89,6 +105,18 @@ class Messages extends Api
 
    public function deleteById(array $data):void 
    {
+       if(!$this->authToken(3))
+       {
+          $this->call(
+            401,
+            "unauthorized",
+            "Usuário não está autenticado (sem token ou token inválido).",
+            "error"
+            )->back();
+        return;
+        }
+
+
         if(empty($data["message_id"])) 
         {
             $this->call(
@@ -121,7 +149,18 @@ class Messages extends Api
    
    public function updateById(array $data): void
     {
-        if (empty($data["message_id"]) || empty($data["user_photographer_id"]) || empty($data["user_id"]) || empty($data["message"])) 
+        if(!$this->authToken(3))
+       {
+          $this->call(
+            401,
+            "unauthorized",
+            "Usuário não está autenticado (sem token ou token inválido).",
+            "error"
+            )->back();
+        return;
+        }
+
+       if(empty($data["message_id"]) || empty($data["user_photographer_id"]) || empty($data["user_id"]) || empty($data["message"])) 
         {
             $this->call(
             400,
