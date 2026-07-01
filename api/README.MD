@@ -6,7 +6,7 @@
 ![License](https://img.shields.io/badge/license-Educacional-lightgrey.svg)
 
 ---
-
+# 1. visão geral
 # Sumário
 
 1. Sobre o Projeto
@@ -310,7 +310,7 @@ Ferramentas
 # Estrutura Inicial do Projeto
 
 ```
-photoconnect/
+  carpe-diem/
 
 │
 
@@ -357,10 +357,7 @@ Essas funcionalidades representam o núcleo do sistema e servirão como base par
 
 ---
 
-**Fim da Parte 1**
----
-
-# Arquitetura do Sistema
+#  2. Arquitetura do Sistema
 
 ## Visão Arquitetural
 
@@ -763,7 +760,7 @@ Histórico
 # Estrutura de Diretórios
 
 ```
-photoconnect/
+carpe-diem/
 
 assets/
 │
@@ -907,10 +904,7 @@ cidade
 
 ---
 
-**Fim da Parte 2**
----
-
-# Banco de Dados
+# 3. Banco de Dados
 
 ## Visão Geral
 
@@ -1340,14 +1334,9 @@ O modelo foi preparado para futuras expansões, incluindo:
 
 ---
 
-## Fim da Parte 3
----
+## 4. Paronama geral 
 
-# Documentação Funcional
-
-## Visão Geral
-
-O PhotoConnect foi desenvolvido para conectar fotógrafos e clientes por meio de uma plataforma web centralizada, permitindo divulgação profissional, pesquisa por localização, gerenciamento de portfólios e comunicação segura.
+O Carpe Diem foi desenvolvido para conectar fotógrafos e clientes por meio de uma plataforma web centralizada, permitindo divulgação profissional, pesquisa por localização, gerenciamento de portfólios e comunicação segura.
 
 Todos os usuários acessam o mesmo sistema, porém cada perfil possui permissões específicas.
 
@@ -1891,63 +1880,14 @@ Ao realizar logout:
 | Login | ✔ | ✔ | ✔ |
 | Editar Perfil | ✔ | ✔ | ✔ |
 | Pesquisar Fotógrafos | ✔ | ✔ | ✔ |
-| Publicar Fotos | ✖ | ✔ | ✔ |
+| Publicar Fotos | ✖ | ✔ | ✖ |
 | Mensagens | ✔ | ✔ | ✔ |
 | Gerenciar Usuários | ✖ | ✖ | ✔ |
 | Aprovar Cadastros | ✖ | ✖ | ✔ |
-| Relatórios | ✖ | ✖ | ✔ |
 
 ---
 
-# Indicadores do Sistema (Futuro)
-
-O painel administrativo poderá apresentar:
-
-- Total de usuários
-- Total de fotógrafos
-- Total de clientes
-- Cadastros por mês
-- Fotografias publicadas
-- Portfólios ativos
-- Mensagens enviadas
-- Acessos diários
-- Fotografias mais visualizadas
-- Especialidades mais procuradas
-- Cidades com maior número de fotógrafos
-
----
-
-# Roadmap Funcional
-
-## Versão 1.0
-
-- Cadastro
-- Login
-- Perfil
-- Portfólio
-- Pesquisa
-- Mensagens
-
-## Versão 2.0
-
-- Favoritos
-- Avaliações
-- Agenda
-
-## Versão 3.0
-
-- Pagamentos online
-- Planos Premium
-- Aplicativo Mobile
-- API Pública
-- Integração com Google Maps
-
----
-
-## Fim da Parte 4
----
-
-# Instalação e Configuração
+# 5. Instalação e Configuração
 
 ## Requisitos do Sistema
 
@@ -1969,12 +1909,6 @@ PHP 8.2+
 
 ```
 MySQL 8+
-```
-
-ou
-
-```
-MariaDB 10.6+
 ```
 
 ### Navegadores Compatíveis
@@ -2036,7 +1970,7 @@ MySQL
 
 ↓
 
-PhotoConnect
+carpe-diem
 ```
 
 ---
@@ -2046,7 +1980,7 @@ PhotoConnect
 Criar um banco chamado
 
 ```sql
-photoconnect
+projeto
 ```
 
 Importar
@@ -2080,7 +2014,7 @@ Exemplo:
 
 $host = "localhost";
 
-$db = "photoconnect";
+$db = "projeto";
 
 $user = "root";
 
@@ -2650,10 +2584,7 @@ A adoção das práticas descritas neste README contribui para um desenvolviment
 
 ---
 
-**Fim da Parte 5**
----
-
-# Diagramas UML
+# 6. Diagramas UML
 
 ## Diagrama de Casos de Uso
 
@@ -2949,52 +2880,6 @@ Banco + Uploads
 
 Backup completo da aplicação
 
----
-
-# Roadmap
-
-## Versão 1.0
-
-- Cadastro
-- Login
-- Pesquisa
-- Portfólio
-- Mensagens
-
----
-
-## Versão 1.5
-
-- Favoritos
-- Avaliações
-- Comentários
-
----
-
-## Versão 2.0
-
-- Agenda
-- Disponibilidade
-- Notificações
-
----
-
-## Versão 3.0
-
-- Aplicativo Android
-- Aplicativo iOS
-- API Pública
-
----
-
-## Versão 4.0
-
-- Inteligência Artificial para recomendação
-- Pesquisa inteligente
-- Estatísticas avançadas
-- Dashboard analítico
-
----
 
 # FAQ
 
@@ -3077,8 +2962,6 @@ Seu uso para fins educacionais é permitido, respeitando os créditos dos autore
 | Versão | Data | Descrição |
 |---------|------|-----------|
 | 1.0 | 2026 | Documento inicial |
-| 1.1 | Futuro | Atualizações e melhorias |
-
 ---
 
 # Considerações Finais
@@ -3091,12 +2974,12 @@ A documentação apresentada descreve a estrutura do sistema, os requisitos, as 
 
 ## Estrutura Final do README
 
-- Parte 1 – Introdução e visão geral
-- Parte 2 – Arquitetura, requisitos e regras de negócio
-- Parte 3 – Banco de dados e modelagem
-- Parte 4 – Documentação funcional e fluxos
-- Parte 5 – Instalação, configuração, segurança e deploy
-- Parte 6 – Diagramas, manuais, roadmap, FAQ e anexos
+-  1 – Introdução e visão geral
+-  2 – Arquitetura, requisitos e regras de negócio
+-  3 – Banco de dados e modelagem
+-  4 – Documentação funcional e fluxos
+-  5 – Instalação, configuração, segurança e deploy
+-  6 – Diagramas, manuais, roadmap, FAQ e anexos
 
 ---
 
