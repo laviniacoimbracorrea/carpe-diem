@@ -6,175 +6,173 @@ use Source\Models\User;
 
 class Users extends Api
 {
-    public function register (array $data): void
+   
+    public function auth(array $data): void
     {
-        if(!isset($data['password']) || empty($data['password'])) {
-            $this->call(400,
-                "bad_request",
-                "A senha é obrigatória.",
-                "error")->back();
+        if (!$this->validateLoginFields($data)) return;
+
+        $user = new User();
+        if (!$user->login($data['email'], $data['password'])) {
+            $this->call(401, "unauthorized", $user->getErrorMessage(), "error")->back();
             return;
         }
 
-        if(!$this->validateNameEmail($data)){
-            $this->call(400,
-                "bad_request",
-                "Nome e e-mail são obrigatórios. O e-mail deve ser válido.",
-                "error")->back();
-            return;
-        }
+        $response = [
+            "id" => $user->getId(),
+            "name" => $user->getName(),
+            "photo" => $user->getPhoto(),
+            "type_id" => $user->getTypeId(),
+            "token" => $user->getToken(),
+        ];
+
+        $this->call(200, "success", "Usuário logado com sucesso", "success")->back($response);
+    }
+
+    public function registerAdmin(array $data): void
+    {
+        $this->createProfile($data, 1);
+    }
+
+    public function updateAdmin(array $data): void
+    {
+        $this->updateProfile($data, 1, "Administrador");
+    }
+
+    public function deleteAdmin(array $data): void
+    {
+        $this->deleteProfile(1, "Administrador");
+    }
+
+    public function registerPhotographer(array $data): void
+    {
+        $this->createProfile($data, 2, $data['speciality_id'] ?? null);
+    }
+
+    public function updatePhotographer(array $data): void
+    {
+        $this->updateProfile($data, 2, "Fotógrafo");
+    }
+
+    public function deletePhotographer(array $data): void
+    {
+        $this->deleteProfile(2, "Fotógrafo");
+    }
+
+    public function registerClient(array $data): void
+    {
+        $this->createProfile($data, 3);
+    }
+
+    public function updateClient(array $data): void
+    {
+        $this->updateProfile($data, 3, "Cliente");
+    }
+
+    public function deleteClient(array $data): void
+    {
+        $this->deleteProfile(3, "Cliente");
+    }
+
+    private function createProfile(array $data, int $typeId, ?int $specialityId = null): void
+    {
+        if (!$this->validateRequiredFields($data)) return;
 
         $user = new User(
-            null,
-            2,
-            $data['speciality_id'],
-            $data['name'],
-            $data['email'],
-            $data['password'],
-            $data['photo'],
-            $data['city'],
-            $data['state'],
-            $data['phone_number']
+            null, 
+            $typeId, 
+            $specialityId, 
+            $data['name'], 
+            $data['email'], 
+            $data['password'], 
+            $data['photo'] ?? null, 
+            $data['city'] ?? null, 
+            $data['state'] ?? null, 
+            $data['phone_number'] ?? null
         );
 
-        if(!$user->insert()) {
+        if (!$user->insert()) {
             $this->call(500, "internal_server_error", $user->getErrorMessage(), "error")->back();
             return;
         }
 
-        $response = [
-            "id" => $user->getId(),
-            "name" => $user->getName(),
-            "email" => $user->getEmail(), 
-            "password" => $user->getPassword(), 
-            "photo" => $user->getPhoto(),
-            "city" => $user->getCity(),
-            "state" => $user->getState(),
-            "phoneNumber" => $user->getPhoneNumber()
-        ];
-
-        $this->call(201,"success","Usuário inserido com sucesso","created")->back($response);
+        $this->call(201, "success", "Usuário cadastrado com sucesso", "created")->back($this->userResponse($user));
     }
 
-    public function auth (array $data): void
+    private function updateProfile(array $data, int $typeId, string $roleName): void
     {
-        if(!isset($data['email'], $data['password']) ||
-            empty($data['email']) || empty($data['password']) ||
-            !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            $this->call(
-                400,
-                "bad_request",
-                "E-mail e senha são obrigatórios. O e-mail deve ser válido.",
-                "error")->back();
+        if (!$this->authToken($typeId)) {
+            $this->call(401, "unauthorized", "Acesso restrito a {$roleName}s.", "error")->back();
+            return;
+        }
+
+        if (!isset($data['name'], $data['email']) || empty($data['name']) || empty($data['email'])) {
+            $this->call(400, "bad_request", "Nome e e-mail são obrigatórios para atualização.", "error")->back();
             return;
         }
 
         $user = new User();
-        if(!$user->login($data['email'], $data['password'])) {
-            $this->call(
-                401,
-                "unauthorized",
-                $user->getErrorMessage(),
-                "error")->back();
+        $user->setId($this->userAuthId); 
+        $user->setName($data['name']);
+        $user->setEmail($data['email']);
+
+        if (!$user->updateById($this->userAuthId)) {
+            $this->call(500, "internal_server_error", "Erro ao atualizar os dados do {$roleName}.", "error")->back();
             return;
         }
 
-        $response = [
-            "id" => $user->getId(),
-            "name" => $user->getName(),
-            "photo" => $user->getPhoto(),
-            "token" => $user->getToken(),
-        ];
-
-        $this->call(
-            200,
-            "success",
-            "Usuário logado com sucesso",
-            "success")->back($response);
+        $this->call(200, "success", "Dados do {$roleName} atualizados com sucesso", "success")->back();
     }
 
-    public function authAdmin (array $data): void
+    private function deleteProfile(int $typeId, string $roleName): void
     {
-        if(!isset($data['email'], $data['password']) ||
-            empty($data['email']) || empty($data['password']) ||
-            !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            $this->call(
-                400,
-                "bad_request",
-                "E-mail e senha são obrigatórios. O e-mail deve ser válido.",
-                "error")->back();
+        if (!$this->authToken($typeId)) {
+            $this->call(401, "unauthorized", "Acesso restrito a {$roleName}s.", "error")->back();
             return;
         }
 
         $user = new User();
-        if(!$user->login($data['email'], $data['password'], 1)) {
-            $this->call(
-                401,
-                "unauthorized",
-                $user->getErrorMessage(),
-                "error")->back();
+        if (!$user->softDeleteById((int)$this->userAuthId)) {
+            $this->call(500, "internal_server_error", "Erro ao excluir conta de {$roleName}.", "error")->back();
             return;
         }
 
-        $response = [
-            "id" => $user->getId(),
-            "name" => $user->getName(),
-            "photo" => $user->getPhoto(),
-            "token" => $user->getToken(),
-        ];
-
-        $this->call(
-            200,
-            "success",
-            "Usuário logado com sucesso",
-            "success")->back($response);
+        $this->call(200, "success", "Conta de {$roleName} excluída com sucesso!", "success")->back();
     }
 
-    public function update (array $data): void
+    private function validateLoginFields(array $data): bool
     {
-        if(!$this->authToken (2)){
-            $this->call(
-                401,
-                "unauthorized",
-                "Usuário não está autenticado (sem token ou token inválido).",
-                "error")->back();
-            return;
-        }
-        // fazer o update do usuário agora autenticado preciso do id
-
-        var_dump($this->userAuthId);
-
-        $this->call(200,"success","Usuário atualizado com sucesso","success")->back();
-    }
-
-    public function updateAdmin (array $data): void
-    {
-        if(!$this->authToken (1)){
-            $this->call(
-                401,
-                "unauthorized",
-                "Usuário não está autenticado (sem token ou token inválido).",
-                "error")->back();
-            return;
-        }
-        // validar campos
-        // fazer o update do usuário ADMIN agora autenticado
-        $this->call(
-            200,
-            "success",
-            "Usuário atualizado com sucesso",
-            "success")->back();
-
-    }
-
-    // Valida somente Nome e Email, mas pode ser alterada para validar mais campos
-    private function validateNameEmail(array $data): bool
-    {
-        if(!isset($data["name"],$data["email"]) ||
-            empty($data["name"]) || empty($data["email"]) ||
-            !filter_var($data["email"], FILTER_VALIDATE_EMAIL)) {
+        if (!isset($data['email'], $data['password']) || empty($data['email']) || empty($data['password']) || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            $this->call(400, "bad_request", "E-mail e senha válidos são obrigatórios.", "error")->back();
             return false;
         }
         return true;
+    }
+
+    private function validateRequiredFields(array $data): bool
+    {
+        if (!isset($data['password']) || empty($data['password'])) {
+            $this->call(400, "bad_request", "A senha é obrigatória.", "error")->back();
+            return false;
+        }
+
+        if (!isset($data["name"], $data["email"]) || empty($data["name"]) || empty($data["email"]) || !filter_var($data["email"], FILTER_VALIDATE_EMAIL)) {
+            $this->call(400, "bad_request", "Nome e e-mail válidos são obrigatórios.", "error")->back();
+            return false;
+        }
+        return true;
+    }
+
+    private function userResponse(User $user): array
+    {
+        return [
+            "id" => $user->getId(),
+            "name" => $user->getName(),
+            "email" => $user->getEmail(),
+            "photo" => $user->getPhoto(),
+            "city" => $user->getCity(),
+            "state" => $user->getState(),
+            "phoneNumber" => $user->getPhoneNumber(),
+            "type_id" => $user->getTypeId()
+        ];
     }
 }
