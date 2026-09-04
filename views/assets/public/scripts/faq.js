@@ -1,102 +1,88 @@
-const faqs = [
-      {
-        categoria: 'Para clientes',
-        itens: [
-          {
-            p: 'Preciso criar uma conta para ver os portfólios?',
-            r: 'Não. Todos os portfólios são acessíveis sem cadastro. A conta é necessária apenas para enviar mensagens aos fotógrafos e deixar avaliações.'
-          },
-          {
-            p: 'Como entro em contato com um fotógrafo?',
-            r: 'Dentro de cada portfólio há um formulário de mensagem. Você precisará estar logado como cliente para enviá-la. O fotógrafo recebe a mensagem na sua área de aplicação.'
-          },
-          {
-            p: 'As avaliações são verificadas?',
-            r: 'Sim. Apenas usuários com conta de cliente podem deixar avaliações. Cada avaliação passa por moderação antes de ser exibida publicamente.'
-          },
-          {
-            p: 'O Carpe Diem intermedia o pagamento?',
-            r: 'Não. A plataforma conecta clientes e fotógrafos, mas o contrato e pagamento são negociados diretamente entre as partes.'
-          }
-        ]
-      },
-      {
-        categoria: 'Para fotógrafos',
-        itens: [
-          {
-            p: 'Como cadastro meu portfólio na plataforma?',
-            r: 'Acesse a página de Cadastro, selecione "Sou fotógrafo" e preencha o formulário com suas informações, especialidade e fotos. Sua solicitação será revisada pela nossa equipe em até 5 dias úteis.'
-          },
-          {
-            p: 'Posso editar meu portfólio depois de aprovado?',
-            r: 'Sim. Após aprovação e login, você terá acesso à sua área de aplicação onde poderá atualizar fotos, descrição, especialidades e dados de contato a qualquer momento.'
-          },
-          {
-            p: 'Quais regiões são atendidas atualmente?',
-            r: 'No momento atendemos fotógrafos da região Sul do Brasil: Paraná, Santa Catarina e Rio Grande do Sul. A expansão para outras regiões está prevista para fases futuras do projeto.'
-          }
-        ]
-      },
-      {
-        categoria: 'Conta e acesso',
-        itens: [
-          {
-            p: 'Esqueci minha senha. Como recupero o acesso?',
-            r: 'Na página de login, utilize a opção "Esqueci minha senha". Você receberá um e-mail com um link de redefinição válido por 24 horas.'
-          },
-          {
-            p: 'Posso ter uma conta de cliente e de fotógrafo ao mesmo tempo?',
-            r: 'Não. Cada e-mail está vinculado a um único tipo de conta. Caso precise de ambos os acessos, utilize e-mails diferentes para cada cadastro.'
-          },
-          {
-            p: 'Como excluo minha conta?',
-            r: 'Acesse seu perfil na área de aplicação e vá até "Configurações da conta". Lá você encontrará a opção de solicitar a exclusão permanente dos seus dados.'
-          }
-        ]
-      }
-    ];
+console.log("FAQ carregando...");
 
-    const lista = document.getElementById('faq-lista');
-    let contadorCliques = {};
+async function fetchFAQS() {
 
-    faqs.forEach((bloco, bi) => {
-      const catEl = document.createElement('span');
-      catEl.className = 'faq-categoria';
-      catEl.textContent = bloco.categoria;
-      lista.appendChild(catEl);
+    try {
 
-      bloco.itens.forEach((item, ii) => {
-        const id = `${bi}-${ii}`;
-        contadorCliques[id] = 0;
+        const response = await fetch(
+            "http://localhost:8080/carpe-diem/api/faqs/list"
+        );
 
-        const div = document.createElement('div');
-        div.className = 'faq-item';
-        div.innerHTML = `
-          <button class="faq-pergunta" aria-expanded="false" data-id="${id}">
-            <span>${item.p}</span>
-            <span class="faq-icone">+</span>
-          </button>
-          <div class="faq-resposta"><p>${item.r}</p></div>
-        `;
-        lista.appendChild(div);
+        console.log(response);
 
-        div.querySelector('.faq-pergunta').addEventListener('click', function() {
-          // Lógica de clique par/ímpar
-          contadorCliques[id]++;
-          const aberto = contadorCliques[id] % 2 !== 0;
+        const faqs = await response.json();
 
-          // Fecha todos os outros
-          document.querySelectorAll('.faq-item.aberto').forEach(el => {
-            const outroId = el.querySelector('.faq-pergunta').dataset.id;
-            if (outroId !== id) {
-              contadorCliques[outroId] = 0; // reseta o contador do fechado
-              el.classList.remove('aberto');
-              el.querySelector('.faq-pergunta').setAttribute('aria-expanded', 'false');
-            }
-          });
+        console.log(faqs);
 
-          div.classList.toggle('aberto', aberto);
-          this.setAttribute('aria-expanded', aberto);
+        const listFaqs = document.querySelector("#list-faqs");
+        faqs.data.forEach(faq => {
+
+            const faqItem = document.createElement("li");
+
+            faqItem.className = "faq-item";
+
+            faqItem.innerHTML = `
+                <button 
+                    class="faq-question"
+                    type="button"
+                    aria-expanded="false"
+                >
+                    <span>${faq.question}</span>
+
+                    <span class="faq-icon">+</span>
+                </button>
+
+                <p class="faq-answer">
+                    ${faq.answer}
+                </p>
+            `;
+
+            listFaqs.appendChild(faqItem);
+
+            const button = faqItem.querySelector(".faq-question");
+
+            button.addEventListener("click", () => {
+
+                const isOpen = faqItem.classList.contains("active");
+
+              
+                document.querySelectorAll(".faq-item").forEach(item => {
+
+                    item.classList.remove("active");
+
+                    const otherButton =
+                        item.querySelector(".faq-question");
+
+                    if (otherButton) {
+                        otherButton.setAttribute(
+                            "aria-expanded",
+                            "false"
+                        );
+                    }
+
+                });
+
+               
+                if (!isOpen) {
+
+                    faqItem.classList.add("active");
+
+                    button.setAttribute(
+                        "aria-expanded",
+                        "true"
+                    );
+
+                }
+
+            });
+
         });
-      });
-    });
+
+    } catch (error) {
+
+        console.error("Erro ao carregar as FAQs:", error);
+
+    }
+}
+
+fetchFAQS();
