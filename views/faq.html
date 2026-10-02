@@ -1,251 +1,320 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perguntas Frequentes — Carpe Diem</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="assets/_common/styles/global.css" />
-  <link rel="stylesheet" href="assets/public/styles/public.css" />
-  <style>
-.faq-lista {
-    max-width: 780px;
-    margin: 110px auto 0;
-
-    padding: 0;
-
-    list-style: none;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 2px;
-}
-
-
-.faq-item {
-    background: var(--cor-superficie);
-
-    border: 1px solid var(--cor-borda-suave);
-
-    border-radius: var(--raio-medio);
-
-    overflow: hidden;
-
-    transition: box-shadow 0.25s ease;
-}
-
-
-.faq-item.active {
-    box-shadow: 0 8px 28px var(--cor-sombra-media);
-}
-
-
-/* =========================
-   PERGUNTA
-========================= */
-
-.faq-question {
-    width: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 22px 28px;
-
-    background: none;
-    border: none;
-
-    cursor: pointer;
-
-    font-family: var(--fonte-titulo);
-
-    font-size: 1.15rem;
-
-    font-weight: 500;
-
-    color: var(--cor-texto-principal);
-
-    text-align: left;
-
-    gap: 16px;
-}
-
-
-.faq-question:hover {
-    background: var(--cor-ivory);
-}
-
-
-/* =========================
-   ÍCONE
-========================= */
-
-.faq-icon {
-    width: 28px;
-    height: 28px;
-
-    border-radius: 50%;
-
-    background: var(--cor-ivory);
-
-    border: 1px solid var(--cor-borda);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    flex-shrink: 0;
-
-    color: var(--cor-brass);
-
-    font-family: Arial, sans-serif;
-
-    font-size: 20px;
-
-    font-weight: 300;
-
-    line-height: 1;
-
-    transition:
-        transform 0.3s ease,
-        background 0.2s ease,
-        color 0.2s ease;
-}
-
-
-/* =========================
-   ÍCONE ABERTO
-========================= */
-
-.faq-item.active .faq-icon {
-
-    transform: rotate(45deg);
-
-    background: var(--cor-brass);
-
-    color: var(--cor-void);
-
-    border-color: var(--cor-brass);
-}
-
-
-/* =========================
-   RESPOSTA
-========================= */
-
-.faq-answer {
-
-    display: none;
-
-    margin: 0;
-
-    padding: 0 28px 24px;
-
-    font-family: var(--fonte-texto);
-
-    font-size: 0.9rem;
-
-    color: var(--cor-texto-mudo);
-
-    line-height: 1.85;
-}
-
-
-/* =========================
-   RESPOSTA ABERTA
-========================= */
-
-.faq-item.active .faq-answer {
-
-    display: block;
-
-    padding-top: 18px;
-
-    border-top: 1px solid var(--cor-borda-suave);
-}
-</style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Perguntas Frequentes — Carpe Diem</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link rel="stylesheet" href="assets/_common/styles/global.css" />
+    <link rel="stylesheet" href="assets/public/styles/public.css" />
+
+    <style>
+        .faq-lista {
+            max-width: 780px;
+            margin: 110px auto 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .faq-item {
+            background: var(--cor-superficie);
+            border: 1px solid var(--cor-borda-suave);
+            border-radius: var(--raio-medio);
+            overflow: hidden;
+            transition: box-shadow 0.25s ease;
+        }
+
+        .faq-item.active {
+            box-shadow: 0 8px 28px var(--cor-sombra-media);
+        }
+
+        /* =========================
+           PERGUNTA
+        ========================= */
+
+        .faq-question {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 22px 28px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: var(--fonte-titulo);
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: var(--cor-texto-principal);
+            text-align: left;
+            gap: 16px;
+        }
+
+        .faq-question:hover {
+            background: var(--cor-ivory);
+        }
+
+        /* =========================
+           ÍCONE
+        ========================= */
+
+        .faq-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--cor-ivory);
+            border: 1px solid var(--cor-borda);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--cor-brass);
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            font-weight: 300;
+            line-height: 1;
+
+            transition:
+                transform 0.3s ease,
+                background 0.2s ease,
+                color 0.2s ease;
+        }
+
+        /* =========================
+           ÍCONE ABERTO
+        ========================= */
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+            background: var(--cor-brass);
+            color: var(--cor-void);
+            border-color: var(--cor-brass);
+        }
+
+        /* =========================
+           RESPOSTA
+        ========================= */
+
+        .faq-answer {
+            display: none;
+            margin: 0;
+            padding: 0 28px 24px;
+            font-family: var(--fonte-texto);
+            font-size: 0.9rem;
+            color: var(--cor-texto-mudo);
+            line-height: 1.85;
+        }
+
+        /* =========================
+           RESPOSTA ABERTA
+        ========================= */
+
+        .faq-item.active .faq-answer {
+            display: block;
+            padding-top: 18px;
+            border-top: 1px solid var(--cor-borda-suave);
+        }
+    </style>
 </head>
+
 <body>
 
-  <header class="topo">
-    <nav class="container topo-inner">
-      <a href="../index.html" class="logo">Carpe<span>Diem</span></a>
-      <nav>
-        <ul class="menu">
-          <li><a href="../index.html">Início</a></li>
-          <li><a href="portfolios.html">Portfólios</a></li>
-          <li><a href="about.html" class="esconder-mobile">Sobre</a></li>
-          <li><a href="contact.html" class="esconder-mobile">Contato</a></li>
-          <li><a href="faq.html" class="ativo">FAQ</a></li>
-          <li><a href="login.html" class="botao botao-secundario">Entrar</a></li>
-        </ul>
-      </nav>
-    </nav>
-  </header>
+    <header class="topo">
 
-  <section class="secao" style="padding-bottom:0;">
-    <nav class="container">
-      <nav class="hero-pagina">
-        <nav class="ornamento"><span class="ornamento-texto">tire suas dúvidas</span></nav>
-        <h1 class="titulo-secao">Perguntas Frequentes</h1>
-        <p class="subtitulo-secao">Clique em uma pergunta para ver a resposta</p>
-      </nav>
-    </nav>
-  </section>
+        <nav class="container topo-inner">
 
-  <section class="secao" style="padding-top:40px;">
-    <nav class="container">
-
-        <ul class="faq-lista" id="list-faqs"></ul>
-
-        <nav style="text-align:center; margin-top:56px;">
-
-            <p style="color:var(--cor-texto-mudo); font-size:0.9rem; margin-bottom:18px;">
-                Não encontrou o que precisava?
-            </p>
-
-            <a href="contact.html" class="botao botao-primario">
-                Fale conosco
+            <a href="../index.html" class="logo">
+                Carpe<span>Diem</span>
             </a>
+
+            <nav>
+                <ul class="menu">
+
+                    <li>
+                        <a href="../index.html">Início</a>
+                    </li>
+
+                    <li>
+                        <a href="portfolios.html">Portfólios</a>
+                    </li>
+
+                    <li>
+                        <a href="about.html" class="esconder-mobile">Sobre</a>
+                    </li>
+
+                    <li>
+                        <a href="contact.html" class="esconder-mobile">Contato</a>
+                    </li>
+
+                    <li>
+                        <a href="faq.html" class="ativo">FAQ</a>
+                    </li>
+
+                    <li>
+                        <a href="login.html" class="botao botao-secundario">
+                            Entrar
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
 
         </nav>
 
-    </nav>
-</section>
+    </header>
 
-  <footer class="rodape">
-    <div class="container">
-      <div class="rodape-grid">
-        <div>
-          <div class="logo" style="color:var(--cor-superficie); margin-bottom:14px;">Carpe<span>Diem</span></div>
-          <p>Conectando fotógrafos e clientes da sua região com simplicidade.</p>
-        </div>
-        <div>
-          <h4>Navegação</h4>
-          <ul>
-            <li><a href="../index.html">Início</a></li>
-            <li><a href="portfolios.html">Portfólios</a></li>
-            <li><a href="about.html">Sobre</a></li>
-            <li><a href="contact.html">Contato</a></li>
-            <li><a href="faq.html">FAQ</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Para fotógrafos</h4>
-          <ul>
-            <li><a href="register.html?tipo=fotografo">Cadastre seu trabalho</a></li>
-            <li><a href="login.html">Área do fotógrafo</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="rodape-base">© 2026 Carpe Diem · Projeto acadêmico</div>
-    </div>
-  </footer>
 
-  <script src="assets/_common/scripts/global.js"></script>
-  <script src="assets/public/scripts/faq.js"></script>
+    <section class="secao" style="padding-bottom:0;">
+
+        <nav class="container">
+
+            <nav class="hero-pagina">
+
+                <nav class="ornamento">
+                    <span class="ornamento-texto">
+                        tire suas dúvidas
+                    </span>
+                </nav>
+
+                <h1 class="titulo-secao">
+                    Perguntas Frequentes
+                </h1>
+
+                <p class="subtitulo-secao">
+                    Clique em uma pergunta para ver a resposta
+                </p>
+
+            </nav>
+
+        </nav>
+
+    </section>
+
+
+    <section class="secao" style="padding-top:40px;">
+
+        <nav class="container">
+
+            <ul class="faq-lista" id="list-faqs"></ul>
+
+            <nav style="text-align:center; margin-top:56px;">
+
+                <p style="color:var(--cor-texto-mudo); font-size:0.9rem; margin-bottom:18px;">
+                    Não encontrou o que precisava?
+                </p>
+
+                <a href="contact.html" class="botao botao-primario">
+                    Fale conosco
+                </a>
+
+            </nav>
+
+        </nav>
+
+    </section>
+
+
+    <footer class="rodape">
+
+        <div class="container">
+
+            <div class="rodape-grid">
+
+                <div>
+
+                    <div
+                        class="logo"
+                        style="color:var(--cor-superficie); margin-bottom:14px;"
+                    >
+                        Carpe<span>Diem</span>
+                    </div>
+
+                    <p>
+                        Conectando fotógrafos e clientes da sua região com simplicidade.
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <h4>Navegação</h4>
+
+                    <ul>
+
+                        <li>
+                            <a href="../index.html">Início</a>
+                        </li>
+
+                        <li>
+                            <a href="portfolios.html">Portfólios</a>
+                        </li>
+
+                        <li>
+                            <a href="about.html">Sobre</a>
+                        </li>
+
+                        <li>
+                            <a href="contact.html">Contato</a>
+                        </li>
+
+                        <li>
+                            <a href="faq.html">FAQ</a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div>
+
+                    <h4>Para fotógrafos</h4>
+
+                    <ul>
+
+                        <li>
+                            <a href="register.html?tipo=fotografo">
+                                Cadastre seu trabalho
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="login.html">
+                                Área do fotógrafo
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+            <div class="rodape-base">
+                © 2026 Carpe Diem · Projeto acadêmico
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script src="assets/_common/scripts/global.js"></script>
+
+    <script
+        type="module"
+        src="assets/public/scripts/faq.js">
+    </script>
+
 </body>
+
 </html>

@@ -1,20 +1,21 @@
 console.log("FAQ carregando...");
 
+import FaqService from "../../_common/scripts/services/FaqService.js";
+
+const faqService = new FaqService();
+
 async function fetchFAQS() {
 
     try {
 
-        const response = await fetch(
-            "http://localhost:8080/carpe-diem/api/faqs/list"
-        );
+        console.log("FAQ carregando...");
 
-        console.log(response);
-
-        const faqs = await response.json();
+        const faqs = await faqService.list();
 
         console.log(faqs);
 
         const listFaqs = document.querySelector("#list-faqs");
+
         faqs.data.forEach(faq => {
 
             const faqItem = document.createElement("li");
@@ -22,7 +23,7 @@ async function fetchFAQS() {
             faqItem.className = "faq-item";
 
             faqItem.innerHTML = `
-                <button 
+                <button
                     class="faq-question"
                     type="button"
                     aria-expanded="false"
@@ -45,7 +46,6 @@ async function fetchFAQS() {
 
                 const isOpen = faqItem.classList.contains("active");
 
-              
                 document.querySelectorAll(".faq-item").forEach(item => {
 
                     item.classList.remove("active");
@@ -62,7 +62,6 @@ async function fetchFAQS() {
 
                 });
 
-               
                 if (!isOpen) {
 
                     faqItem.classList.add("active");
@@ -83,6 +82,7 @@ async function fetchFAQS() {
         console.error("Erro ao carregar as FAQs:", error);
 
     }
+
 }
 
 fetchFAQS();

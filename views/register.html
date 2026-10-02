@@ -71,8 +71,30 @@
           </form>
         </div>
 
+                <!-- Cadastro fotografo -->
+        <div class="painel ativo" data-painel="fotografo">
+          <div class="aviso-tipo">
+            Sua requisição passa por curadoria do administrador antes de ser aprovada. Você receberá uma resposta por e-mail.
+          </div>
+          <form class="formulario" data-tipo="fotografo" data-acao="cadastro">
+            <div class="campo">
+              <label>Nome</label>
+              <input type="text" placeholder="Seu nome" required />
+            </div>
+            <div class="campo">
+              <label>E-mail</label>
+              <input type="email" placeholder="seu@email.com" required />
+            </div>
+            <div class="campo">
+              <label>Senha</label>
+              <input type="password" placeholder="Mínimo 6 caracteres" required />
+            </div>
+            <button type="submit" class="botao botao-primario">Enviar requisição</button>
+          </form>
+        </div>
+
         <!-- Cadastro Fotógrafo -->
-        <div class="painel" data-painel="fotografo">
+        <!-- <div class="painel" data-painel="fotografo">
           <div class="aviso-tipo">
             Sua requisição passa por curadoria do administrador antes de ser aprovada. Você receberá uma resposta por e-mail.
           </div>
@@ -114,7 +136,7 @@
             </div>
             <button type="submit" class="botao botao-primario">Enviar requisição</button>
           </form>
-        </div>
+        </div> -->
 
         <p class="troca-modo">Já tem conta? <a href="login.html">Entrar</a></p>
       </div>

@@ -84,7 +84,7 @@ class Messages extends Api
             $this->call(
             500,
             "internal_server_error",
-            "Erro ao salvar no banco de dados - {$review->getErrorMessage()}",
+            "Erro ao salvar no banco de dados - {$message->getErrorMessage()}",
             "error"
             )->back();
 

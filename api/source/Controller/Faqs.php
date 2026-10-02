@@ -50,7 +50,7 @@ class Faqs extends Api
             // persistência de dados
             if(!$faq->insert())
                 {
-                    $this->call(500, "internal_server_error", "Erro ao salvar a faq no banco de dados. {$photo->getErrorMessage()}", "error")
+                    $this->call(500, "internal_server_error", "Erro ao salvar a faq no banco de dados. {$faq->getErrorMessage()}", "error")
                     ->back(null);
                     return;
                 }
@@ -96,7 +96,7 @@ class Faqs extends Api
 
         if(!$faq->updateById($data["id"]))
             {
-            $this->call(500, "internal_server_error", "Erro ao atualizar a faq no banco de dados:". $photo->getErrorMessage(),  "error")
+            $this->call(500, "internal_server_error", "Erro ao atualizar a faq no banco de dados:". $faq->getErrorMessage(),  "error")
             ->back(null);
             return;
             }

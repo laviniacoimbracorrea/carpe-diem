@@ -59,7 +59,7 @@ class Portfolios extends Api
                     "user_id" => $portfolio->getUserId(),
                     "title" => $portfolio->getTitle(),
                     "description" => $portfolio->getDescription(),
-                    "cover_id" => $portfolio->getCoverLink()
+                    "cover_link" => $portfolio->getCoverLink()
                 ];
 
                 $this->call(201, "success", "Portfolio inserido com sucesso!", "success")

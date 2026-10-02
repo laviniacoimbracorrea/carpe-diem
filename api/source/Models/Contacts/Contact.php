@@ -19,7 +19,7 @@ public function __construct(
     $this->id = $id;
     $this->userId = $userId;
     $this->text = $text;
-
+    
     $this->table = 'contacts';
     $this->primaryKey = 'id';
     $this->fillable = ['userId', 'text', 'active'];
