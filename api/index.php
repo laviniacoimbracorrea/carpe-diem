@@ -69,9 +69,12 @@ $route->group(null);
 
 // fotos
 
+
 $route->group("/photos");
 
 $route->get("/list", "Photos:listAll");
+$route->get("/portfolio/{portfolio_id}", "Photos:listByPortfolioId");
+
 $route->post("/insert", "Photos:insertPhoto");
 $route->put("/update", "Photos:updatePhoto");
 $route->get("/select/{id}", "Photos:selectPhoto");
