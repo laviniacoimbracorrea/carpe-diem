@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         type_id: Number(typeId)
       };
 
-      console.log('Dados enviados no login:', loginData);
+      //console.log('Dados enviados no login:', loginData);
 
       try {
         const response = await fetch(API_URL, {

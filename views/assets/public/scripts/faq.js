@@ -10,7 +10,7 @@ async function fetchFAQS() {
 
         console.log("FAQ carregando...");
 
-        const faqs = await faqService.list();
+        const faqs = await faqService.list(); 
 
         console.log(faqs);
 
@@ -39,6 +39,8 @@ async function fetchFAQS() {
             `;
 
             listFaqs.appendChild(faqItem);
+
+            console.log("FAQ com o caminho HTTP e API");
 
             const button = faqItem.querySelector(".faq-question");
 

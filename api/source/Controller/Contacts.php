@@ -13,12 +13,13 @@ class Contacts extends Api
         $result = $contacts->selectAll();
 
         if (empty($result)) {
+
             $this->call(
                 404,
-                "error",
+                "not_found",
                 "Nenhum contato encontrado.",
                 "error"
-            )->back();
+            )->back(null);
 
             return;
         }
@@ -31,43 +32,66 @@ class Contacts extends Api
         )->back($result);
     }
 
+
     public function listById(array $data): void
     {
-        if (empty($data["contact_id"])) {
+        if (
+            !isset($data["contact_id"]) ||
+            empty($data["contact_id"]) ||
+            !filter_var(
+                $data["contact_id"],
+                FILTER_VALIDATE_INT
+            )
+        ) {
+
             $this->call(
                 400,
-                "error",
-                "ID do contato não informado.",
+                "bad_request",
+                "O ID do contato é obrigatório.",
                 "error"
-            )->back();
+            )->back(null);
 
             return;
         }
 
+
         $contact = new Contact();
+
 
         if (!$contact->selectById((int)$data["contact_id"])) {
 
             $this->call(
                 404,
-                "error",
+                "not_found",
                 $contact->getErrorMessage(),
                 "error"
-            )->back();
+            )->back(null);
 
             return;
         }
 
+
+        $response = [
+            "id" => $contact->getId(),
+            "user_id" => $contact->getUserId(),
+            "text" => $contact->getText()
+        ];
+
+
         $this->call(
             200,
             "success",
-            "Mensagem encontrada.",
+            "Contato encontrado.",
             "success"
-        )->back($contact);
+        )->back($response);
     }
+
 
     public function insert(array $data): void
     {
+        /*
+         * Verifica autenticação
+         */
         if (!$this->authToken(3)) {
 
             $this->call(
@@ -75,50 +99,73 @@ class Contacts extends Api
                 "unauthorized",
                 "Usuário não está autenticado (sem token ou token inválido).",
                 "error"
-            )->back();
+            )->back(null);
 
             return;
         }
 
+
+        /*
+         * Verifica os dados obrigatórios
+         */
         if (
-            empty($data['user_id']) ||
-            empty($data['text'])
+            !isset($data["user_id"]) ||
+            !isset($data["text"]) ||
+            empty($data["user_id"]) ||
+            empty($data["text"]) ||
+            !filter_var(
+                $data["user_id"],
+                FILTER_VALIDATE_INT
+            )
         ) {
 
             $this->call(
                 400,
-                "error",
-                "Dados obrigatórios não informados.",
+                "bad_request",
+                "Os campos user_id e text são obrigatórios.",
                 "error"
-            )->back();
+            )->back(null);
 
             return;
         }
 
+
+        /*
+         * Cria o contato
+         */
         $contact = new Contact(
             null,
-            (int)$data['user_id'],
-            $data['text']
+            (int)$data["user_id"],
+            $data["text"]
         );
 
+
+        /*
+         * Insere no banco
+         */
         if (!$contact->insert()) {
 
             $this->call(
                 500,
                 "internal_server_error",
-                "Erro ao salvar no banco de dados: " .
+                "Erro ao salvar o contato no banco de dados: " .
                 $contact->getErrorMessage(),
                 "error"
-            )->back();
+            )->back(null);
 
             return;
         }
 
+
+        /*
+         * Resposta
+         */
         $response = [
             "id" => $contact->getId(),
             "user_id" => $contact->getUserId(),
             "text" => $contact->getText()
         ];
+
 
         $this->call(
             201,
@@ -127,6 +174,7 @@ class Contacts extends Api
             "success"
         )->back($response);
     }
+
 
     public function deleteById(array $data): void
     {
@@ -137,44 +185,56 @@ class Contacts extends Api
                 "unauthorized",
                 "Usuário não está autenticado.",
                 "error"
-            )->back();
+            )->back(null);
 
             return;
         }
 
-        if (empty($data["contact_id"])) {
+
+        if (
+            !isset($data["contact_id"]) ||
+            empty($data["contact_id"]) ||
+            !filter_var(
+                $data["contact_id"],
+                FILTER_VALIDATE_INT
+            )
+        ) {
 
             $this->call(
                 400,
-                "error",
-                "ID não informado.",
+                "bad_request",
+                "O ID do contato é obrigatório.",
                 "error"
-            )->back();
+            )->back(null);
 
             return;
         }
 
+
         $contact = new Contact();
+
 
         if (!$contact->deleteById((int)$data["contact_id"])) {
 
             $this->call(
                 404,
-                "error",
-                "Contato não encontrado.",
+                "not_found",
+                $contact->getErrorMessage(),
                 "error"
-            )->back();
+            )->back(null);
 
             return;
         }
 
+
         $this->call(
             200,
             "success",
-            "Contato removido.",
+            "Contato removido com sucesso.",
             "success"
-        )->back();
+        )->back(null);
     }
+
 
     public function updateById(array $data): void
     {
@@ -185,26 +245,39 @@ class Contacts extends Api
                 "unauthorized",
                 "Usuário não está autenticado.",
                 "error"
-            )->back();
+            )->back(null);
 
             return;
         }
 
+
         if (
+            !isset($data["contact_id"]) ||
+            !isset($data["user_id"]) ||
+            !isset($data["text"]) ||
             empty($data["contact_id"]) ||
             empty($data["user_id"]) ||
-            empty($data["text"])
+            empty($data["text"]) ||
+            !filter_var(
+                $data["contact_id"],
+                FILTER_VALIDATE_INT
+            ) ||
+            !filter_var(
+                $data["user_id"],
+                FILTER_VALIDATE_INT
+            )
         ) {
 
             $this->call(
                 400,
-                "error",
-                "Dados obrigatórios não informados.",
+                "bad_request",
+                "Os campos contact_id, user_id e text são obrigatórios.",
                 "error"
-            )->back();
+            )->back(null);
 
             return;
         }
+
 
         $contact = new Contact(
             (int)$data["contact_id"],
@@ -212,23 +285,30 @@ class Contacts extends Api
             $data["text"]
         );
 
-        if (!$contact->updateById((int)$data["contact_id"])) {
+
+        if (
+            !$contact->updateById(
+                (int)$data["contact_id"]
+            )
+        ) {
 
             $this->call(
                 500,
-                "error",
+                "internal_server_error",
                 $contact->getErrorMessage(),
                 "error"
-            )->back();
+            )->back(null);
 
             return;
         }
+
 
         $response = [
             "id" => $contact->getId(),
             "user_id" => $contact->getUserId(),
             "text" => $contact->getText()
         ];
+
 
         $this->call(
             200,

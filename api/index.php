@@ -43,6 +43,8 @@ $route->post("/client", "Users:registerClient");
 $route->put("/client", "Users:updateClient");
 $route->delete("/client", "Users:deleteClient");
 
+$route->post("/photo","Users:uploadPhoto"); // upload de foto de usuário
+
 $route->group(null);
 
 // $route->group("/users");

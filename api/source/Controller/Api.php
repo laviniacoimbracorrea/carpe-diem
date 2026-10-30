@@ -7,64 +7,114 @@ use Source\Core\JWTToken;
 
 class Api
 {
-    protected ?int $userAuthId = null;
+   protected ?int $userAuthId = null;
 
-    public function authToken (int $typeId): bool
+    protected array $response = [];
+
+    public function authToken(int $typeId): bool
     {
+        $headers = function_exists('getallheaders')
+            ? getallheaders()
+            : [];
 
-        $header = getallheaders();
+        $token = null;
 
-        $token = $header["token"] ?? $header['Authorization'] ?? $header['authorization'] ?? null;
+        // Procura o token nos cabeçalhos recebidos.
+        foreach ($headers as $name => $value) {
+            if (
+                strtolower($name) === 'authorization' ||
+                strtolower($name) === 'token'
+            ) {
+                $token = $value;
+                break;
+            }
+        }
 
-        if(!$token){
+        // Alternativa para servidores que não disponibilizam getallheaders().
+        $token = $token
+            ?? $_SERVER['HTTP_AUTHORIZATION']
+            ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION']
+            ?? null;
+
+        if (!is_string($token) || trim($token) === '') {
             return false;
         }
 
-        if(str_starts_with($token, 'Bearer ')){
+        // Remove o prefixo Bearer, caso ele tenha sido enviado.
+        if (stripos($token, 'Bearer ') === 0) {
             $token = substr($token, 7);
         }
 
         $jwt = new JWTToken();
+        $decoded = $jwt->decode(trim($token));
 
-        $jwtToken = $jwt->decode($token);
+        if (
+            !$decoded ||
+            !isset($decoded->data->id, $decoded->data->email)
+        ) {
+            return false;
+        }
 
-        if(!$jwtToken){
+        $userId = filter_var(
+            $decoded->data->id,
+            FILTER_VALIDATE_INT
+        );
+
+        if (!$userId || $userId < 1) {
             return false;
         }
 
         $user = new User();
-        if(!$user->permissionVerify($jwtToken->data->email, $typeId)){
+
+        // Confere se o usuário ainda existe, está ativo
+        // e possui o tipo de conta autorizado.
+        if (!$user->permissionVerify(
+            (string) $decoded->data->email,
+            $typeId,
+            $userId
+        )) {
             return false;
         }
 
-        $this->userAuthId = $jwtToken->data->id;
+        $this->userAuthId = $userId;
 
         return true;
-
     }
 
-    protected function call (int $code, ?string $status = null, ?string $message = null, ?string $type = null): Api
-    {
+    protected function call(
+        int $code,
+        ?string $status = null,
+        ?string $message = null,
+        ?string $type = null
+    ): Api {
         http_response_code($code);
-        if(!empty($status)){
-            $this->response = [
-                "code" => $code,
-                "type" => $type,
-                "status" => $status,
-                "message" => (!empty($message) ? $message : null)
-            ];
-        }
+
+        $this->response = [
+            'code' => $code,
+            'type' => $type,
+            'status' => $status,
+            'message' => $message
+        ];
+
         return $this;
     }
 
-    protected function back(object | array $data = null): Api
-    {
-        header('Content-Type: application/json');
-        if ($data) {
-            $this->response["data"] = $data;
+    protected function back(
+        object|array|null $data = null
+    ): Api {
+        header('Content-Type: application/json; charset=UTF-8');
+
+        if ($data !== null) {
+            $this->response['data'] = $data;
         }
-        echo json_encode($this->response, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+        echo json_encode(
+            $this->response,
+            JSON_PRETTY_PRINT
+            | JSON_UNESCAPED_UNICODE
+            | JSON_UNESCAPED_SLASHES
+        );
+
         return $this;
     }
-
 }

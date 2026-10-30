@@ -2,7 +2,9 @@
 
 namespace Source\Models;
 
+
 use PDO;
+use PDOException;
 use Source\Core\Model;
 use Source\Core\Connect;
 use Source\Core\JWTToken;
@@ -19,27 +21,50 @@ class User extends Model
     private ?string $city;
     private ?string $state;
     private ?string $phoneNumber;
-    private ?string $active;
+    private ?string $status;
 
     private ?string $token = null;
 
-    public function __construct(?int $id = null, ?int $typeId = null, ?int $specialityId = null, ?string $name = null, 
-    ?string $email = null, ?string $password = null, ?string $photo = null, ?string $city = null, ?string $state = null, ?string $phoneNumber = null)
-    {
+    public function __construct(
+        ?int $id = null,
+        ?int $typeId = null,
+        ?int $specialityId = null,
+        ?string $name = null,
+        ?string $email = null,
+        ?string $password = null,
+        ?string $photo = null,
+        ?string $city = null,
+        ?string $state = null,
+        ?string $phoneNumber = null,
+        ?string $status = 'aprovado'
+    ) {
         $this->id = $id;
         $this->typeId = $typeId;
         $this->specialityId = $specialityId;
         $this->name = $name;
         $this->email = $email;
         $this->password = $password;
-        $this->photo = $photo ?? "";
-        $this->city = $city; 
-        $this->state = $state; 
+        $this->photo = $photo;
+        $this->city = $city;
+        $this->state = $state;
         $this->phoneNumber = $phoneNumber;
+        $this->status = $status;
 
-        $this->table = 'users'; // nome da tabela do banco
-        $this->primaryKey = 'id'; // nome da chave primária da tabela
-        $this->fillable = ['typeId', 'speciality', 'name', 'email', 'password', 'photo', 'city', 'state', 'phoneNumber']; // camelCase
+        $this->table = 'users';
+        $this->primaryKey = 'id';
+
+        $this->fillable = [
+            'typeId',
+            'specialityId',
+            'name',
+            'email',
+            'password',
+            'photo',
+            'city',
+            'state',
+            'phoneNumber',
+            'status'
+        ];
     }
 
     public function getId(): ?int
@@ -61,13 +86,13 @@ class User extends Model
     {
         $this->typeId = $typeId;
     }
-    
-    public function getSpecialityId(): ?int 
+
+    public function getSpecialityId(): ?int
     {
-        return $this->speciality;
+        return $this->specialityId;
     }
 
-    public function setSpecialityId(?int $specialityI): void 
+    public function setSpecialityId(?int $specialityId): void
     {
         $this->specialityId = $specialityId;
     }
@@ -112,36 +137,44 @@ class User extends Model
         $this->photo = $photo;
     }
 
-    // ESTADO E NUMERO
-
-    public function getCity(): ?string 
+    public function getCity(): ?string
     {
         return $this->city;
     }
 
-    public function setCity(?string $city): void 
+    public function setCity(?string $city): void
     {
         $this->city = $city;
     }
 
-    public function getState(): ?string 
+    public function getState(): ?string
     {
         return $this->state;
     }
 
-    public function setState(?string $state): void 
+    public function setState(?string $state): void
     {
         $this->state = $state;
     }
 
-    public function getPhoneNumber(): ?string 
+    public function getPhoneNumber(): ?string
     {
         return $this->phoneNumber;
     }
 
-    public function setPhoneNumber(?string $phoneNumber): void 
+    public function setPhoneNumber(?string $phoneNumber): void
     {
         $this->phoneNumber = $phoneNumber;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?string $status): void
+    {
+        $this->status = $status;
     }
 
     public function getToken(): ?string
@@ -149,67 +182,181 @@ class User extends Model
         return $this->token;
     }
 
-    public function insert (): bool
+    public function insert(): bool
     {
-        $query = "SELECT * FROM {$this->table} WHERE email = :email";
-        $stmt = Connect::getInstance()->prepare($query);
-        $stmt->bindParam(":email", $this->email);
-        $stmt->execute();
-        if($stmt->rowCount() > 0){
-            $this->errorMessage = "Email já cadastrado";
+        if (
+            $this->email === null ||
+            !filter_var($this->email, FILTER_VALIDATE_EMAIL)
+        ) {
+            $this->errorMessage = 'E-mail inválido.';
             return false;
         }
-        $this->password = password_hash($this->password, PASSWORD_DEFAULT);
 
-        if(!parent::insert()){
-            $this->errorMessage = "Algo deu errado";
+        if ($this->password === null || $this->password === '') {
+            $this->errorMessage = 'A senha é obrigatória.';
             return false;
         }
+
+        try {
+            $query = "
+                SELECT id
+                FROM {$this->table}
+                WHERE email = :email
+                LIMIT 1
+            ";
+
+            $stmt = Connect::getInstance()->prepare($query);
+            $stmt->bindValue(':email', $this->email);
+            $stmt->execute();
+
+            if ($stmt->fetch(PDO::FETCH_ASSOC)) {
+                $this->errorMessage = 'E-mail já cadastrado.';
+                return false;
+            }
+        } catch (PDOException $e) {
+            $this->errorMessage = 'Não foi possível verificar o e-mail.';
+            return false;
+        }
+
+        $this->password = password_hash(
+            $this->password,
+            PASSWORD_DEFAULT
+        );
+
+        if (!parent::insert()) {
+            $this->errorMessage ??=
+                'Não foi possível cadastrar o usuário.';
+
+            return false;
+        }
+
         return true;
     }
 
-    public function login (string $email, string $password, int $typeId = 2): bool
-    {
-        $query = "SELECT * FROM {$this->table} WHERE email = :email AND type_id = :typeId";
-        $stmt = Connect::getInstance()->prepare($query);
-        $stmt->bindParam(":email", $email);
-        $stmt->bindParam(":typeId", $typeId);
-        $stmt->execute();
-        if($stmt->rowCount() == 0){
-            $this->errorMessage = "Email não cadastrado";
+    public function login(
+        string $email,
+        string $password,
+        int $typeId
+    ): bool {
+        $query = "
+            SELECT *
+            FROM {$this->table}
+            WHERE email = :email
+              AND type_id = :typeId
+            LIMIT 1
+        ";
+
+        try {
+            $stmt = Connect::getInstance()->prepare($query);
+
+            $stmt->bindValue(':email', $email);
+            $stmt->bindValue(':typeId', $typeId, PDO::PARAM_INT);
+
+            $stmt->execute();
+
+            $user = $stmt->fetch(PDO::FETCH_OBJ);
+
+            if (!$user) {
+                $this->errorMessage =
+                    'Usuário não encontrado ou tipo de conta incorreto.';
+
+                return false;
+            }
+
+            if (
+                !isset($user->password) ||
+                !password_verify($password, $user->password)
+            ) {
+                $this->errorMessage = 'E-mail ou senha incorretos.';
+                return false;
+            }
+
+            if ((int) $user->active !== 1) {
+                $this->errorMessage = 'Esta conta está desativada.';
+                return false;
+            }
+
+            if ($user->status !== 'aprovado') {
+                if ($user->status === 'pendente') {
+                    $this->errorMessage =
+                        'Seu cadastro está aguardando aprovação.';
+                } else {
+                    $this->errorMessage =
+                        'Seu cadastro não foi aprovado.';
+                }
+
+                return false;
+            }
+
+            $this->id = (int) $user->id;
+            $this->typeId = (int) $user->type_id;
+
+            $this->specialityId = isset($user->speciality_id)
+                ? (int) $user->speciality_id
+                : null;
+
+            $this->name = $user->name;
+            $this->email = $user->email;
+            $this->photo = $user->photo ?? null;
+            $this->city = $user->city ?? null;
+            $this->state = $user->state ?? null;
+            $this->phoneNumber = $user->phone_number ?? null;
+            $this->status = $user->status;
+
+            $jwt = new JWTToken();
+
+            $this->token = $jwt->encode([
+                'id' => $this->id,
+                'name' => $this->name,
+                'email' => $this->email,
+                'type_id' => $this->typeId
+            ]);
+
+            return true;
+        } catch (PDOException $e) {
+            $this->errorMessage = 'Não foi possível realizar o login.';
             return false;
         }
-        $user = $stmt->fetch();
-        if(!password_verify($password, $user->password)){
-            $this->errorMessage = "Senha incorreta";
-            return false;
-        }
-        $this->id = $user->id;
-        $this->typeId = $user->type_id;
-        $this->name = $user->name;
-        $this->email = $user->email;
-        $this->photo = $user->photo;
-        $jwt = new JWTToken();
-        // definir quais informações irão par o payload do token
-        $this->token = $jwt->encode([
-            "id" => $user->id,
-            "name" => $user->name,
-            "email" => $user->email
-        ]);
-        return true;
     }
 
-    public function permissionVerify (string $email, $typeId): bool
-    {
-        $query = "SELECT * FROM {$this->table} WHERE email = :email AND type_id = :typeId";
-        $stmt = Connect::getInstance()->prepare($query);
-        $stmt->bindParam(":email", $email);
-        $stmt->bindParam(":typeId", $typeId);
-        $stmt->execute();
-        if($stmt->rowCount() == 0) {
+    public function permissionVerify(
+        string $email,
+        int $typeId,
+        ?int $userId = null
+    ): bool {
+        $query = "
+            SELECT id
+            FROM {$this->table}
+            WHERE email = :email
+              AND type_id = :typeId
+              AND active = 1
+              AND status = 'aprovado'
+        ";
+
+        if ($userId !== null) {
+            $query .= ' AND id = :id';
+        }
+
+        $query .= ' LIMIT 1';
+
+        try {
+            $stmt = Connect::getInstance()->prepare($query);
+
+            $stmt->bindValue(':email', $email);
+            $stmt->bindValue(':typeId', $typeId, PDO::PARAM_INT);
+
+            if ($userId !== null) {
+                $stmt->bindValue(':id', $userId, PDO::PARAM_INT);
+            }
+
+            $stmt->execute();
+
+            return (bool) $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            $this->errorMessage =
+                'Não foi possível verificar a permissão.';
+
             return false;
         }
-        return true;
     }
-
 }

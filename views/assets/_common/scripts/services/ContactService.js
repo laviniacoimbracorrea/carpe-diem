@@ -1,32 +1,50 @@
-import HttpClientBase from "./HttpClientBase.js";
-
 class ContactService {
 
     constructor() {
-        this.http = new HttpClientBase(
-            "http://localhost:8080/carpe-diem/api"
-        );
+
+        this.baseUrl =
+            "http://localhost:8080/carpe-diem/api/contacts";
+
     }
 
-    async list() {
-        return await this.http.get("/contacts/list");
-    }
-
-    async select(id) {
-        return await this.http.get(`/contacts/list/${id}`);
-    }
 
     async insert(data) {
-        return await this.http.post("/contacts", data);
+
+        const token = localStorage.getItem("token");
+
+
+        const response = await fetch(
+            `${this.baseUrl}/`,
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+
+                body: JSON.stringify(data)
+            }
+        );
+
+
+        const result = await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.message ||
+                "Erro ao enviar contato."
+            );
+
+        }
+
+
+        return result;
     }
 
-    async update(id, data) {
-        return await this.http.put(`/contacts/${id}`, data);
-    }
-
-    async delete(id) {
-        return await this.http.delete(`/contacts/${id}`);
-    }
 }
+
 
 export default ContactService;

@@ -1,9 +1,8 @@
 <?php
 
-namespace source\Models\Contacts; 
+namespace Source\Models\Contacts;
 
-use Source\Core\Model; 
-use Source\Core\Connect; 
+use Source\Core\Model;
 
 class Contact extends Model
 {
@@ -11,59 +10,60 @@ class Contact extends Model
     private ?int $userId;
     private ?string $text;
 
-public function __construct(
-    ?int $id = null,
-    ?int $userId = null,
-    ?string $text = null
-){
-    $this->id = $id;
-    $this->userId = $userId;
-    $this->text = $text;
-    
-    $this->table = 'contacts';
-    $this->primaryKey = 'id';
-    $this->fillable = ['userId', 'text', 'active'];
-}
 
-public function getId():?int
-{
-    return $this->id;
-}
+    public function __construct(
+        ?int $id = null,
+        ?int $userId = null,
+        ?string $text = null
+    ) {
 
-public function setId(?int $id = null):void
-{
-    $this->id = $id;
-}
+        $this->id = $id;
+        $this->userId = $userId;
+        $this->text = $text;
 
 
-public function getUserId():?int
-{
-    return $this->userId;
-}
+        $this->table = 'contacts';
+        $this->primaryKey = 'id';
 
-public function setUserId(?int $userId = null):void
-{
-    $this->userId = $userId;
-}
-
-
-public function getText():?string
-{
-    return $this->text;
-}
-
-public function setText(?string $text = null):void
-{
-    $this->text = $text;
-}
-
-    public function getActive(): ?int 
-    {
-        return $this->active;
+        $this->fillable = [
+            'userId',
+            'text'
+        ];
     }
 
-    public function setActive(?int $active = null): void 
+
+    public function getId(): ?int
     {
-        $this->active = $active;
+        return $this->id;
+    }
+
+
+    public function setId(?int $id = null): void
+    {
+        $this->id = $id;
+    }
+
+
+    public function getUserId(): ?int
+    {
+        return $this->userId;
+    }
+
+
+    public function setUserId(?int $userId = null): void
+    {
+        $this->userId = $userId;
+    }
+
+
+    public function getText(): ?string
+    {
+        return $this->text;
+    }
+
+
+    public function setText(?string $text = null): void
+    {
+        $this->text = $text;
     }
 }
