@@ -1,0 +1,58 @@
+/* ============================================
+   Carpe Diem — Shared Layout Components
+   Shared dashboard, table, badge and page-state styles.
+   ============================================ */
+
+.app-secao-pagina {
+  display: none;
+}
+
+.app-secao-pagina.ativo {
+  display: block;
+}
+
+:is(.tabela-mensagens, .admin-tabela) {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+:is(.tabela-mensagens, .admin-tabela) th {
+  text-align: left;
+  padding: 12px 14px;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cor-texto-mudo);
+  font-weight: 500;
+  border-bottom: 1px solid var(--cor-borda-suave);
+}
+
+:is(.tabela-mensagens, .admin-tabela) td {
+  padding: 14px;
+  border-bottom: 1px solid var(--cor-borda-suave);
+  font-size: 0.875rem;
+}
+
+:is(.tabela-mensagens, .admin-tabela) tr:last-child td {
+  border-bottom: none;
+}
+
+:is(.tabela-mensagens, .admin-tabela) tr:hover td {
+  background: var(--cor-ivory);
+}
+
+.badge,
+.badge-novo {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: var(--raio-pill);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.badge-novo {
+  background: rgba(200,169,110,0.18);
+  color: var(--cor-bark);
+}

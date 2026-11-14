@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfólios — Carpe Diem</title>
+  <meta name="description" content="Explore portfólios de fotógrafos regionais. Filtre por cidade, especialidade e encontre o profissional ideal." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/_common/styles/global.css" />
+  <link rel="stylesheet" href="assets/public/styles/public.css" />
+</head>
+<body>
+
+  <header class="topo">
+    <div class="container topo-inner">
+      <a href="../index.html" class="logo">Carpe<span>Diem</span></a>
+      <nav>
+        <ul class="menu">
+          <li><a href="../index.html">Início</a></li>
+          <li><a href="portfolios.html">Portfólios</a></li>
+          <li><a href="about.html" class="esconder-mobile">Sobre</a></li>
+          <li><a href="contact.html" class="esconder-mobile">Contato</a></li>
+          <li><a href="faq.html" class="esconder-mobile">FAQ</a></li>
+          <li><a href="login.html" class="botao botao-secundario">Entrar</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="secao">
+    <div class="container">
+      <div style="padding: 0 0 48px;">
+        <div class="ornamento"><span class="ornamento-texto">descubra talentos</span></div>
+        <h1 class="titulo-secao">Portfólios</h1>
+        <p class="subtitulo-secao">Encontre o fotógrafo certo para o seu momento</p>
+      </div>
+
+      <!-- Filtros -->
+      <div class="filtros-portfolio">
+        <input type="text" id="filtro-nome" placeholder="Buscar por nome..." />
+        <select id="filtro-cidade">
+          <option value="">Cidade</option>
+          <option>Curitiba</option>
+          <option>Florianópolis</option>
+          <option>Porto Alegre</option>
+          <option>Joinville</option>
+          <option>Maringá</option>
+          <option>Caxias do Sul</option>
+        </select>
+        <select id="filtro-especialidade">
+          <option value="">Especialidade</option>
+          <option>Casamentos</option>
+          <option>Ensaios</option>
+          <option>Eventos</option>
+          <option>Família</option>
+          <option>Retrato</option>
+        </select>
+        <button class="botao botao-primario" onclick="aplicarFiltros()">Filtrar</button>
+      </div>
+
+      <!-- Lista renderizada pelo JS -->
+      <div class="lista-portfolios" id="lista-portfolios"></div>
+    </div>
+  </section>
+
+    <footer class="rodape">
+    <div class="container">
+      <div class="rodape-grid">
+        <div>
+          <div class="logo" style="color: var(--cor-superficie); margin-bottom: 14px;">Carpe<span>Diem</span></div>
+          <p>Conectando fotógrafos e clientes da sua região com simplicidade.</p>
+        </div>
+        <div>
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="../index.html">Início</a></li>
+            <li><a href="portfolios.html">Portfólios</a></li>
+            <li><a href="about.html">Sobre</a></li>
+            <li><a href="contact.html">Contato</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Para fotógrafos</h4>
+          <ul>
+            <li><a href="register.html?tipo=fotografo">Cadastre seu trabalho</a></li>
+            <li><a href="login.html">Área do fotógrafo</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="rodape-base">© 2026 Carpe Diem · Projeto acadêmico</div>
+    </div>
+  </footer>
+
+  <script src="assets/_common/scripts/global.js"></script>
+  <script src="assets/_common/scripts/photographers-data.js"></script>
+  <script src="assets/public/scripts/portfolios.js"></script>
+</body>
+</html>

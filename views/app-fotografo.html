@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meu Portfólio — Carpe Diem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/_common/styles/global.css" />
+  <link rel="stylesheet" href="assets/app/styles/app.css" />
+</head>
+<body>
+
+  <header class="topo">
+    <div class="container topo-inner">
+      <a href="../index.html" class="logo">Carpe<span>Diem</span></a>
+      <nav>
+        <ul class="menu">
+          <li><a href="../index.html">Início</a></li>
+          <li><a href="portfolios.html">Portfólios</a></li>
+          <li><a href="app-fotografo.html" class="ativo">Minha área</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="app-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-perfil">
+        <img class="sidebar-avatar"
+             id="sidebar-avatar-fotografo"
+             src="assets/_common/images/default-profile.jpg"
+             alt="Avatar" />
+        <span class="sidebar-nome">Lavínia Coimbra</span>
+        <span class="sidebar-tipo">Fotógrafa</span>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li><a href="#dashboard" class="ativo nav-link" data-secao="dashboard">
+          <span class="nav-icone">◈</span> Dashboard
+        </a></li>
+        <li><a href="#perfil" class="nav-link" data-secao="perfil">
+          <span class="nav-icone">◯</span> Meu perfil
+        </a></li>
+        <li><a href="#portfolio" class="nav-link" data-secao="portfolio">
+          <span class="nav-icone">◧</span> Meu portfólio
+        </a></li>
+        <li><a href="#mensagens" class="nav-link" data-secao="mensagens">
+          <span class="nav-icone">◫</span> Mensagens
+          <span class="badge-novo" style="margin-left:auto;">3</span>
+        </a></li>
+      </ul>
+
+      <div class="sidebar-separador"></div>
+
+      <div class="sidebar-sair">
+        <a href="#" onclick="encerrarSessao(true); return false;">
+          <span class="nav-icone">←</span> Sair
+        </a>
+      </div>
+    </aside>
+
+    <!-- Conteúdo -->
+    <main class="app-conteudo">
+
+      <!-- Dashboard -->
+      <div id="secao-dashboard" class="app-secao-pagina">
+        <div class="app-cabecalho">
+          <h1>Olá, Lavínia</h1>
+          <p>Veja um resumo do seu portfólio</p>
+        </div>
+
+        <div class="stats-grid" style="grid-template-columns: repeat(3,1fr);">
+          <div class="stat-card destaque">
+            <div class="stat-numero">32</div>
+            <div class="stat-label">Avaliações recebidas</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-numero">4.9</div>
+            <div class="stat-label">Nota média</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-numero">3</div>
+            <div class="stat-label">Mensagens novas</div>
+          </div>
+        </div>
+
+        <div class="app-secao">
+          <h2>Mensagens recentes</h2>
+          <table class="tabela-mensagens">
+            <thead>
+              <tr>
+                <th>Remetente</th>
+                <th>Assunto</th>
+                <th>Data</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="msgs-resumo"></tbody>
+          </table>
+          <a href="#mensagens" class="botao botao-secundario dashboard-open-messages" style="margin-top:18px;display:inline-flex;">Ver caixa de entrada completa</a>
+        </div>
+      </div>
+
+      <!-- Perfil -->
+      <div id="secao-perfil" class="app-secao-pagina" style="display:none;">
+        <div class="app-cabecalho">
+          <h1>Meu perfil</h1>
+          <p>Atualize seus dados pessoais e de acesso</p>
+        </div>
+
+        <div class="app-secao">
+          <h2>Foto e informações básicas</h2>
+          <form class="perfil-form" id="form-perfil-fotografo">
+            <div class="perfil-avatar-wrapper">
+              <img class="perfil-avatar"
+                   id="perfil-avatar-fotografo"
+                   src="assets/_common/images/default-profile.jpg"
+                   alt="Avatar" />
+              <div class="perfil-avatar-info">
+                <h4>Foto de perfil</h4>
+                <p>Recomendado: quadrado, mínimo 200×200px</p>
+                <input type="file" id="foto-perfil-fotografo" accept="image/jpeg,image/png,image/webp" style="font-size:0.82rem;" />
+                <small>JPG, PNG ou WEBP, até 5 MB.</small>
+              </div>
+            </div>
+
+            <div class="form-linha">
+              <div class="campo">
+                <label>Nome completo</label>
+                <input id="perfil-fotografo-nome" required type="text" />
+              </div>
+              <div class="campo">
+                <label>E-mail</label>
+                <input id="perfil-fotografo-email" required type="email" />
+              </div>
+            </div>
+            <div class="form-linha">
+              <div class="campo">
+                <label>Cidade</label>
+                <input id="perfil-fotografo-cidade" required type="text" />
+              </div>
+              <div class="campo">
+                <label>Estado</label>
+                <select id="perfil-fotografo-estado" required>
+                  <option value="">Selecione...</option>
+                  <option value="PR">PR</option>
+                  <option value="SC">SC</option>
+                  <option value="RS">RS</option>
+                </select>
+              </div>
+            </div>
+            <div class="campo">
+              <label>Telefone</label>
+              <input id="perfil-fotografo-telefone" required type="tel" placeholder="(41) 99000-0000" />
+            </div>
+            <div class="campo">
+              <label>Especialidade principal</label>
+              <select id="perfil-fotografo-especialidade" required>
+                <option selected>Casamentos</option>
+                <option>Ensaios</option>
+                <option>Eventos</option>
+                <option>Família</option>
+                <option>Retrato</option>
+              </select>
+            </div>
+            <div>
+              <button type="submit" class="botao botao-primario">Salvar alterações</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="app-secao">
+          <h2>Alterar senha</h2>
+          <form class="perfil-form" id="form-senha-fotografo" style="max-width:420px;">
+            <div class="campo">
+              <label>Senha atual</label>
+              <input type="password" placeholder="••••••••" />
+            </div>
+            <div class="campo">
+              <label>Nova senha</label>
+              <input id="nova-senha-fotografo" type="password" placeholder="••••••••" minlength="6" />
+            </div>
+            <div class="campo">
+              <label>Confirmar nova senha</label>
+              <input id="confirmar-senha-fotografo" type="password" placeholder="••••••••" minlength="6" />
+            </div>
+            <button type="submit" class="botao botao-primario">Alterar senha</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Portfólio -->
+      <div id="secao-portfolio" class="app-secao-pagina" style="display:none;">
+        <div class="app-cabecalho">
+          <h1>Meu portfólio</h1>
+          <p>Gerencie as fotos exibidas publicamente</p>
+        </div>
+
+        <div class="app-secao">
+          <h2>Dados do portfólio</h2>
+          <form id="portfolio-data-form">
+            <div class="campo" style="margin-bottom:14px;">
+              <label for="portfolio-title">Título público</label>
+              <input id="portfolio-title" type="text" maxlength="150" placeholder="Ex.: Fotografia de casamentos e eventos" required />
+            </div>
+            <div class="campo" style="margin-bottom:14px;">
+              <label for="campo-bio-completa">Descrição pública</label>
+              <textarea id="campo-bio-completa" rows="5" maxlength="3000" placeholder="Conte um pouco sobre seu trabalho, estilo e atendimento."></textarea>
+            </div>
+            <button type="submit" class="botao botao-primario">Salvar portfólio</button>
+            <button id="portfolio-delete" type="button" class="botao botao-secundario" style="margin-left:8px;">Excluir portfólio</button>
+            <small id="portfolio-data-status" aria-live="polite"></small>
+          </form>
+        </div>
+
+        <div class="app-secao">
+          <h2>Foto de capa</h2>
+          <div style="display:grid; grid-template-columns:200px 1fr; gap:24px; align-items:center;">
+            <img id="portfolio-cover-preview" src="assets/public/images/Portfolio - Michael & Melanie Photography.jpg"
+                 style="width:100%; height:140px; object-fit:cover; border-radius:var(--raio-pequeno); border:1px solid var(--cor-borda-suave);" alt="Capa" />
+            <div>
+              <p style="font-size:0.875rem; color:var(--cor-texto-mudo); margin-bottom:14px;">
+                Esta é a imagem exibida no card da lista de portfólios. Recomendado: proporção 3:4.
+              </p>
+              <input id="portfolio-cover-upload" type="file" accept="image/jpeg,image/png,image/webp" style="font-size:0.82rem;" />
+              <small id="portfolio-cover-status" aria-live="polite">JPG, PNG ou WEBP, até 8 MB.</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-secao">
+          <h2>Galeria de fotos</h2>
+          <div class="galeria-gerenciar" id="galeria-gerenciar"></div>
+          <div class="campo" style="margin-top:16px;">
+            <label for="photo-upload">Adicionar imagens à galeria (JPG, PNG ou WEBP, até 8 MB cada)</label>
+            <input id="photo-upload" type="file" accept="image/jpeg,image/png,image/webp" multiple />
+            <small id="photo-upload-status" aria-live="polite"></small>
+            <div id="photo-upload-previews" aria-label="Prévia das imagens selecionadas"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mensagens -->
+      <div id="secao-mensagens" class="app-secao-pagina" style="display:none;">
+        <div class="app-cabecalho">
+          <h1>Mensagens</h1>
+          <p>Clientes interessados no seu trabalho</p>
+        </div>
+        <div class="app-secao">
+          <h2>Caixa de entrada</h2>
+          <table class="tabela-mensagens">
+            <thead>
+              <tr>
+                <th>Remetente</th>
+                <th>Assunto</th>
+                <th>Mensagem</th>
+                <th>Data</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="msgs-inbox"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="assets/_common/scripts/global.js"></script>
+  <script src="assets/_common/scripts/section-navigation.js"></script>
+  <script src="assets/_common/scripts/photographers-data.js"></script>
+  <script src="assets/app/scripts/photographer-dashboard.js"></script>
+  <script type="module" src="assets/app/scripts/portfolio-manager.js"></script>
+</body>
+</html>
